@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+		<record id="view_billdotcom_odoo_backend_tree" model="ir.ui.view">
+			<field name="name">billdotcom.configure.tree</field>
+			<field name="model">billdotcom.configure</field>
+			<field name="type">tree</field>
+			<field name="priority" eval="8" />
+			<field name="arch" type="xml">
+				<tree string="Backend">
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_billdotcom_odoo_backend_form" model="ir.ui.view">
+			<field name="name">billdotcom.configure.form</field>
+			<field name="model">billdotcom.configure</field>
+			<field name="type">form</field>
+			<field name="priority" eval="8" />
+			<field name="arch" type="xml">
+				<form string="Backend">
+					<header>
+						<button string="Check Connection" class="oe_highlight"
+							type="object" name="test_connection" />
+					</header>
+					<sheet>
+						<!-- <label string="Name" /> -->
+						<h1>
+							<field name="name" required="1" />
+						</h1>
+						<separator string="Configuration" colspan="4" />
+						<group col="2">
+							<field name="location" required="1" />
+							<field name="username" required="1" />
+							<field name="password" password="True" required="1" />
+							<field name="org_key" password="True" required="1" />
+							<field name="dev_key" password="True" required="1" />
+						</group>
+
+						<notebook colspan="4">
+							<page string="Import Data">
+								<group>
+									<label class="oe_inline" for="import_bill" string="Import Bill"/>
+									<button class="oe_highlight" name="import_bill" string="Import Bill" type="object"/>
+								</group>
+								<group>
+									<label class="oe_inline" for="import_vendor" string="Import Vendor"/>
+									<button class="oe_highlight" name="import_vendor" string="Import Vendor" type="object"/>
+								</group>
+								<group>
+									<label class="oe_inline" for="import_account" string="Import Chart Of Account"/>
+									<button class="oe_highlight" name="import_account" string="Import Chart Of Account" type="object"/>
+								</group>
+							</page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="billdotcom_odoo_site_action">
+			<field name="name">Bill.com Connection</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">billdotcom.configure</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[]</field>
+			<field name="context">{}</field>
+		</record>
+
+		<record model="ir.actions.act_window.view" id="billdotcom_odoo_site_action_form">
+			<field name="act_window_id" ref="billdotcom_odoo_site_action" />
+			<field name="sequence" eval="20" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="view_billdotcom_odoo_backend_form" />
+		</record>
+
+		<record model="ir.actions.act_window.view" id="wp_odoo_site_action_tree">
+			<field name="act_window_id" ref="billdotcom_odoo_site_action" />
+			<field name="sequence" eval="10" />
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="view_billdotcom_odoo_backend_tree" />
+		</record>
+		
+		 <menuitem groups="group_billdotcom_odoo_manager"
+				   id="menu_billdotcom_root"
+				   name="Odoo Bill.com Bridge"
+		 action="billdotcom_odoo_site_action" />
+	</data>
+</odoo>
+		
