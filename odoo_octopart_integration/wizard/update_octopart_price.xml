@@ -1,0 +1,29 @@
+<odoo>
+    <data>
+
+        <record id="update_octopart_price_view" model="ir.ui.view">
+            <field name="name">update.octopart.price.form</field>
+            <field name="model">update.octopart.price</field>
+            <field name="arch" type="xml">
+                <form string="Update Octopart Vendor Price">
+                    <p class="oe_grey">
+                        This will fetch price from Ocopart and update it in
+                        selected records.
+                    </p>
+                    <footer>
+                        <button string="Update Price" name="update_price"
+                                type="object" default_focus="1" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="action_update_octopart_price"
+            multi="True"
+            key2="client_action_multi" name="Update Octopart Vendor Price"
+            res_model="update.octopart.price" src_model="product.supplierinfo"
+            view_mode="form" target="new" view_type="form" />
+
+    </data>
+</odoo>

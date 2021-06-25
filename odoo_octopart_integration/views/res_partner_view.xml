@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_partner_octopart_form_inherit" model="ir.ui.view">
+            <field name="name">res.partner.octopart.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='purchase']/field[@name='supplier']"
+                       position="after">
+                    <field name="octopart"
+                           attrs="{'invisible': [('supplier', '=', False)]}"/>
+                    <field name="octopart_id"
+                           attrs="{'invisible': ['|',('supplier', '=', False), ('octopart', '=', False)], 'required': [('octopart', '=', True)]}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

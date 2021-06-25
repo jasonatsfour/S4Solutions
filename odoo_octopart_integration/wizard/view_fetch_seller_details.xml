@@ -1,0 +1,61 @@
+<odoo>
+    <data>
+
+        <record id="fetch_seller_detail_tree_view" model="ir.ui.view">
+            <field name="name">fetch.seller.detail.tree</field>
+            <field name="model">fetch.seller.detail</field>
+            <field name="arch" type="xml">
+                <form string="Fetch Seller Detail">
+                    <p>
+                        Fetch vendor details form Octopart for selected
+                        products
+                    </p>
+                    <footer>
+                        <button string="Fetch Vendors"
+                                name="fetch_seller_details"
+                                type="object" default_focus="1"
+                                class="btn-primary"/>
+                        <button string="Cancel" class="btn-default"
+                                special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="action_fetch_seller_detail_tree_view"
+                    multi="True" key2="client_action_multi"
+                    name="Fetch Vendors Details"
+                    res_model="fetch.seller.detail"
+                    src_model="product.template"
+                    view_mode="form" target="new" view_type="form"/>
+
+        <record id="fetch_sellers_view_tree" model="ir.ui.view">
+            <field name="name">fetch.sellers.tree</field>
+            <field name="model">fetch.sellers</field>
+            <field name="arch" type="xml">
+                <form string="Fetch Seller Detail">
+                    <p>
+                        Fetch vendor details form Octopart for selected
+                        products
+                    </p>
+                    <footer>
+                        <button string="Fetch Vendors"
+                                name="fetch_seller_details"
+                                type="object" default_focus="1"
+                                class="btn-primary"/>
+                        <button string="Cancel" class="btn-default"
+                                special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window
+                id="action_fetch_sellers_view"
+                name="Fetch Vendors Details"
+                res_model="fetch.sellers"
+                src_model="product.template"
+                view_mode="form" target="new" view_type="form"/>
+
+    </data>
+</odoo>
