@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="report_mrp_bom_html">
+        <div class="container o_mrp_bom_report_page">
+            <t t-if="data.get('components') or data.get('lines')">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1>BoM Structure &amp; Cost</h1>
+                        <h3>
+                            <a href="#" t-if="data['report_type'] == 'html'" t-att-data-res-id="data['product'].id" t-att-data-model="data['product']._name" class="o_mrp_bom_action">
+                                <t t-esc="data['bom_prod_name']"/>
+                            </a>
+                            <t t-else="" t-esc="data['bom_prod_name']"/>
+                        </h3>
+                        <h6 t-if="data['bom'].code">Reference: <t t-esc="data['bom'].code"/></h6>
+                    </div>
+                </div>
+                <t t-set="currency" t-value="data['currency']"/>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="mt16">
+                            <table width="100%" class="o_mrp_bom_expandable">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th name="th_mrp_bom_h">BoM</th>
+                                        <th name="can-purchase" class="text-right o_mrp_on_hand o_hidden">Can Be Purchased</th>
+                                        <th class="text-right o_mrp_bom_qty">Quantity</th>
+                                        <th class="text-left o_mrp_bom_qty" groups="uom.group_uom">Unit of Measure</th>
+                                        <th t-if="data['report_type'] == 'html'" name="on-hand" class="text-right o_mrp_on_hand o_hidden">On-Hand</th>
+                                        <th t-if="data['report_type'] == 'html'" name="on-hand" class="text-right o_mrp_on_hand o_hidden">Qty To Be Inspected</th>
+                                        <th t-if="data['report_type'] == 'html'" name="on-hand" class="text-right o_mrp_on_hand o_hidden">Qty Forecasted</th>
+                                        <th t-if="data['report_structure'] != 'bom_structure'" class="o_mrp_prod_cost text-right" title="This is the cost defined on the product.">Product Cost</th>
+                                        <th t-if="data['report_structure'] != 'bom_structure'" class="o_mrp_bom_cost text-right" title="This is the cost based on the BoM of the product. It is computed by summing the costs of the components and operations needed to build the product.">BoM Cost</th>
+                                        <th t-if="data['report_type'] == 'html' and data['has_attachments']" class="o_mrp_has_attachments" title="Files attached to the product">Attachments</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <span><a href="#" t-if="data['report_type'] == 'html'" t-att-data-res-id="data['product'].id" t-att-data-model="'product.product'" class="o_mrp_bom_action"><t t-esc="data['bom_prod_name']"/></a><t t-else="" t-esc="data['bom_prod_name']"/></span>
+                                        </td>
+                                        <td name="td_mrp_bom">
+                                            <div><a href="#" t-if="data['report_type'] == 'html'" t-att-data-res-id="data['bom'].id" t-att-data-model="'mrp.bom'" class="o_mrp_bom_action"><t t-esc="data['code']"/></a><t t-else="" t-esc="data['code']"/></div>
+                                        </td>
+                                        <td name="on-hnd-qty" class="text-center o_mrp_on_hand o_hidden"><span><input name="small_header" type="checkbox" t-att-checked="data['product'].purchase_ok or None" onclick="return false;"/></span></td>
+                                        <td class="text-right o_mrp_bom_qty"><span><t t-esc="data['bom_qty']" t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'/></span></td>
+                                        <td class="o_mrp_bom_qty" groups="uom.group_uom"><span><t t-esc="data['bom'].product_uom_id.name"/></span></td>
+                                        <td name="on-hnd-qty" class="text-right o_mrp_on_hand o_hidden"><span><t t-esc="data['product'].qty_available" t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'/></span></td>
+                                        <td name="on-hnd-qty" class="text-right o_mrp_on_hand o_hidden"><span><t t-esc="data['qty_pre_available']" t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'/></span></td>
+                                        <td name="on-hnd-qty" class="text-right o_mrp_on_hand o_hidden"><span><t t-esc="data['qty_forecasted']" t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'/></span></td>
+                                        <td t-if="data['report_structure'] != 'bom_structure'" class="o_mrp_prod_cost text-right">
+                                            <span><t t-esc="data['price']" t-options='{"widget": "monetary", "display_currency": currency}'/></span>
+                                        </td>
+                                        <td t-if="data['report_structure'] != 'bom_structure'" class="o_mrp_bom_cost text-right">
+                                            <span><t t-esc="data['total']" t-options='{"widget": "monetary", "display_currency": currency}'/></span>
+                                        </td>
+                                        <td t-if="data['report_type'] == 'html'">
+                                            <span>
+                                                <t t-if="data['attachments']">
+                                                    <a href="#" role="button" t-att-data-res-id="data['attachments'].ids" t-att-data-model="'mrp.document'" class="o_mrp_show_attachment_action fa fa-fw o_button_icon fa-files-o"/>
+                                                </t>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <t t-if="data['report_type'] == 'html'" t-call="mrp.report_mrp_bom_line"/>
+                                    <t t-if="data['report_type'] == 'pdf'" t-call="mrp.report_mrp_bom_pdf_line"/>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td></td>
+                                        <td name="td_mrp_bom_f"></td>
+                                        <td name="td_on_hand_qty_f" class="o_mrp_on_hand o_hidden"></td>
+                                        <td class="text-right o_mrp_bom_qty"><span><strong>Unit Cost</strong></span></td>
+                                        <td class="o_mrp_bom_qty" groups="uom.group_uom"></td>
+                                        <td name="td_on_hand_qty_f" class="o_mrp_on_hand o_hidden"></td>
+                                        <td name="td_on_hand_qty_f" class="o_mrp_on_hand o_hidden"></td>
+                                        <td name="td_on_hand_qty_f" class="o_mrp_on_hand o_hidden"></td>
+                                        <td t-if="data['report_structure'] != 'bom_structure'" class="o_mrp_prod_cost text-right">
+                                            <span><t t-esc="data['price']/data['bom_qty']" t-options='{"widget": "monetary", "display_currency": currency}'/></span>
+                                        </td>
+                                        <td t-if="data['report_structure'] != 'bom_structure'" class="o_mrp_bom_cost text-right">
+                                            <span><t t-esc="data['total']/data['bom_qty']" t-options='{"widget": "monetary", "display_currency": currency}'/></span>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </t>
+            <t t-else="">
+                <h1 class="text-center">No data available.</h1>
+            </t>
+        </div>
+    </template>
+
+    <template id="report_mrp_bom_pdf">
+        <div class="container o_mrp_bom_report_page">
+            <t t-if="data.get('components') or data.get('lines')">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1>BoM Structure &amp; Cost</h1>
+                        <h3>
+                            <a href="#" t-if="data['report_type'] == 'html'" t-att-data-res-id="data['product'].id" t-att-data-model="data['product']._name" class="o_mrp_bom_action">
+                                <t t-esc="data['bom_prod_name']"/>
+                            </a>
+                            <t t-else="" t-esc="data['bom_prod_name']"/>
+                        </h3>
+                        <h6 t-if="data['bom'].code">Reference: <t t-esc="data['bom'].code"/></h6>
+                    </div>
+                </div>
+                <t t-set="currency" t-value="data['currency']"/>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="mt16">
+                            <table width="100%" class="o_mrp_bom_expandable">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th name="th_mrp_bom_h">BoM</th>
+                                        <th class="text-right">Quantity</th>
+                                        <th class="text-left" groups="uom.group_uom">Unit of Measure</th>
+                                        <th t-if="data['report_structure'] != 'bom_structure'" class="o_mrp_prod_cost text-right" title="This is the cost defined on the product.">Product Cost</th>
+                                        <th t-if="data['report_structure'] != 'bom_structure'" class="o_mrp_bom_cost text-right" title="This is the cost based on the BoM of the product. It is computed by summing the costs of the components and operations needed to build the product.">BoM Cost</th>
+                                        <th t-if="data['report_type'] == 'html' and data['has_attachments']" class="o_mrp_has_attachments" title="Files attached to the product">Attachments</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <span><a href="#" t-if="data['report_type'] == 'html'" t-att-data-res-id="data['product'].id" t-att-data-model="'product.product'" class="o_mrp_bom_action"><t t-esc="data['bom_prod_name']"/></a><t t-else="" t-esc="data['bom_prod_name']"/></span>
+                                        </td>
+                                        <td name="td_mrp_bom">
+                                            <div><a href="#" t-if="data['report_type'] == 'html'" t-att-data-res-id="data['bom'].id" t-att-data-model="'mrp.bom'" class="o_mrp_bom_action"><t t-esc="data['code']"/></a><t t-else="" t-esc="data['code']"/></div>
+                                        </td>
+                                        <td class="text-right"><span><t t-esc="data['bom_qty']" t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'/></span></td>
+                                        <td groups="uom.group_uom"><span><t t-esc="data['bom'].product_uom_id.name"/></span></td>
+                                        <td t-if="data['report_structure'] != 'bom_structure'" class="o_mrp_prod_cost text-right">
+                                            <span><t t-esc="data['price']" t-options='{"widget": "monetary", "display_currency": currency}'/></span>
+                                        </td>
+                                        <td t-if="data['report_structure'] != 'bom_structure'" class="o_mrp_bom_cost text-right">
+                                            <span><t t-esc="data['total']" t-options='{"widget": "monetary", "display_currency": currency}'/></span>
+                                        </td>
+                                        <td t-if="data['report_type'] == 'html'">
+                                            <span>
+                                                <t t-if="data['attachments']">
+                                                    <a href="#" role="button" t-att-data-res-id="data['attachments'].ids" t-att-data-model="'mrp.document'" class="o_mrp_show_attachment_action fa fa-fw o_button_icon fa-files-o"/>
+                                                </t>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <t t-if="data['report_type'] == 'html'" t-call="mrp.report_mrp_bom_line"/>
+                                    <t t-if="data['report_type'] == 'pdf'" t-call="mrp.report_mrp_bom_pdf_line"/>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td></td>
+                                        <td name="td_mrp_bom_f"></td>
+                                        <td class="text-right"><span><strong>Unit Cost</strong></span></td>
+                                        <td groups="uom.group_uom"></td>
+                                        <td t-if="data['report_structure'] != 'bom_structure'" class="o_mrp_prod_cost text-right">
+                                            <span><t t-esc="data['price']/data['bom_qty']" t-options='{"widget": "monetary", "display_currency": currency}'/></span>
+                                        </td>
+                                        <td t-if="data['report_structure'] != 'bom_structure'" class="o_mrp_bom_cost text-right">
+                                            <span><t t-esc="data['total']/data['bom_qty']" t-options='{"widget": "monetary", "display_currency": currency}'/></span>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </t>
+            <t t-else="">
+                <h1 class="text-center">No data available.</h1>
+            </t>
+        </div>
+    </template>
+
+    <template id="report_mrp_bom_clear_to_build_pdf_line">
+      <t t-set="currency" t-value="data['currency']"/>
+      <t t-foreach="data['lines']" t-as="l">
+          <t t-set="space_td" t-value="'margin-left: '+ str(l['level'] * 20) + 'px;'"/>
+          <tr t-if="l['type'] != 'operation'" t-att-style="l['qty_avail']">
+              <td>
+                  <div t-att-style="space_td">
+                    <div><t t-esc="l['name']"/></div>
+                  </div>
+              </td>
+              <td name="td_mrp_code">
+                  <div t-if="l.get('code')" t-esc="l['code']" />
+              </td>
+              <td class="text-center o_mrp_on_hand"><span><input name="small_header" type="checkbox" t-att-checked="'is_purchase' in list(l.keys()) and l['is_purchase'] or None"/></span></td>
+              <td class="text-right">
+                  <span>
+                      <t t-if="l['type'] == 'operation'" t-esc="l['quantity']" t-options='{"widget": "float_time"}'/>
+                      <t t-if="l['type'] == 'bom'" t-esc="l['quantity']" t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'/>
+                  </span>
+              </td>
+              <td groups="uom.group_uom"><span><t t-esc="l['uom']"/></span></td>
+              <td class="text-right o_mrp_on_hand"><span><t t-esc="'qty_available' in list(l.keys()) and l['qty_available'] or 0.0" t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'/></span></td>
+              <td class="text-right o_mrp_on_hand"><span><t t-esc="'qty_pre_available' in list(l.keys()) and l['qty_pre_available'] or 0.0" t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'/></span></td>
+              <td class="text-right o_mrp_on_hand"><span><t t-esc="'qty_forecasted' in list(l.keys()) and l['qty_forecasted'] or 0.0" t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'/></span></td>
+          </tr>
+      </t>
+    </template>
+
+    <template id="report_mrp_bom_clear_to_build_pdf">
+        <div class="container o_mrp_bom_report_page">
+            <t t-if="data.get('components') or data.get('lines')">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1>Clear to Build</h1>
+                        <h3>
+                            <a href="#" t-if="data['report_type'] == 'html'" t-att-data-res-id="data['product'].id" t-att-data-model="data['product']._name" class="o_mrp_bom_action">
+                                <t t-esc="data['bom_prod_name']"/>
+                            </a>
+                            <t t-else="" t-esc="data['bom_prod_name']"/>
+                        </h3>
+                        <h6 t-if="data['bom'].code">Reference: <t t-esc="data['bom'].code"/></h6>
+                    </div>
+                </div>
+                <t t-set="currency" t-value="data['currency']"/>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="mt16">
+                            <table width="100%" class="o_mrp_bom_expandable">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th name="th_mrp_bom_h">BoM</th>
+                                        <th t-if="data['report_structure'] == 'clear_to_build'" name="can-purchase" class="text-right o_mrp_on_hand">Can Be Purchased</th>
+                                        <th class="text-right o_mrp_bom_qty">Quantity</th>
+                                        <th class="text-left o_mrp_bom_qty" groups="uom.group_uom">Unit of Measure</th>
+                                        <th t-if="data['report_structure'] == 'clear_to_build'" name="on-hand" class="text-right o_mrp_on_hand">On-Hand</th>
+                                        <th t-if="data['report_structure'] == 'clear_to_build'" name="on-hand" class="text-right o_mrp_on_hand">Qty To Be Inspected</th>
+                                        <th  t-if="data['report_structure'] == 'clear_to_build'" name="on-hand" class="text-right o_mrp_on_hand">Qty Forecasted</th>
+<!--                                        <th t-if="data['report_structure'] == 'all'" class="o_mrp_prod_cost text-right" title="This is the cost defined on the product.">Product Cost</th>-->
+<!--                                        <th t-if="data['report_structure'] == 'all'" class="o_mrp_bom_cost text-right" title="This is the cost based on the BoM of the product. It is computed by summing the costs of the components and operations needed to build the product.">BoM Cost</th>-->
+<!--                                        <th t-if="data['report_type'] == 'html' and data['has_attachments']" class="o_mrp_has_attachments" title="Files attached to the product">Attachments</th>-->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <span><a href="#" t-if="data['report_type'] == 'html'" t-att-data-res-id="data['product'].id" t-att-data-model="'product.product'" class="o_mrp_bom_action"><t t-esc="data['bom_prod_name']"/></a><t t-else="" t-esc="data['bom_prod_name']"/></span>
+                                        </td>
+                                        <td name="td_mrp_bom">
+                                            <div><a href="#" t-if="data['report_type'] == 'html'" t-att-data-res-id="data['bom'].id" t-att-data-model="'mrp.bom'" class="o_mrp_bom_action"><t t-esc="data['code']"/></a><t t-else="" t-esc="data['code']"/></div>
+                                        </td>
+                                        <td t-if="data['report_structure'] == 'clear_to_build'"  name="on-hnd-qty" class="text-center o_mrp_on_hand"><span><input name="small_header" type="checkbox" t-att-checked="data['product'].purchase_ok or None" onclick="return false;"/></span></td>
+                                        <td class="text-right o_mrp_bom_qty"><span><t t-esc="data['bom_qty']" t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'/></span></td>
+                                        <td class="o_mrp_bom_qty" groups="uom.group_uom"><span><t t-esc="data['bom'].product_uom_id.name"/></span></td>
+                                        <td t-if="data['report_structure'] == 'clear_to_build'"  name="on-hnd-qty" class="text-right o_mrp_on_hand"><span><t t-esc="data['product'].qty_available" t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'/></span></td>
+                                        <td t-if="data['report_structure'] == 'clear_to_build'"  name="on-hnd-qty" class="text-right o_mrp_on_hand"><span><t t-esc="data['qty_pre_available']" t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'/></span></td>
+                                        <td t-if="data['report_structure'] == 'clear_to_build'"  name="on-hnd-qty" class="text-right o_mrp_on_hand"><span><t t-esc="data['qty_forecasted']" t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'/></span></td>
+                                    </tr>
+                                    <t t-call="clear_to_build_report.report_mrp_bom_clear_to_build_pdf_line"/>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td></td>
+                                        <td name="td_mrp_bom_f"></td>
+                                        <td t-if="data['report_structure'] == 'clear_to_build'" name="td_on_hand_qty_f" class="o_mrp_on_hand"></td>
+                                        <td class="text-right o_mrp_bom_qty"><span><strong>Unit Cost</strong></span></td>
+                                        <td class="o_mrp_bom_qty" groups="uom.group_uom"></td>
+                                        <td t-if="data['report_structure'] == 'clear_to_build'" name="td_on_hand_qty_f" class="o_mrp_on_hand"></td>
+                                        <td t-if="data['report_structure'] == 'clear_to_build'" name="td_on_hand_qty_f" class="o_mrp_on_hand"></td>
+                                        <td t-if="data['report_structure'] == 'clear_to_build'" name="td_on_hand_qty_f" class="o_mrp_on_hand"></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </t>
+            <t t-else="">
+                <h1 class="text-center">No data available.</h1>
+            </t>
+        </div>
+    </template>
+
+        <template id="mrp.report_mrp_bom">
+            <t t-if="data['report_type'] == 'html'" t-call="clear_to_build_report.report_mrp_bom_html"/>
+            <t t-elif="data['report_structure'] != 'clear_to_build'" t-call="clear_to_build_report.report_mrp_bom_pdf"/>
+            <t t-elif="data['report_structure'] == 'clear_to_build'" t-call="clear_to_build_report.report_mrp_bom_clear_to_build_pdf"/>
+        </template>
+
+        <template id="report_mrp_bom_line_inherit_clear_to_build" inherit_id="mrp.report_mrp_bom_line">
+            <xpath expr="//tr[1]" position="attributes">
+                <attribute name="t-att-style">l['qty_avail']</attribute>
+            </xpath>
+            <xpath expr="//td[3]" position="replace">
+                <td class="text-right o_mrp_bom_qty"><span><t t-esc="l['prod_qty']" t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'/></span></td>
+            </xpath>
+            <xpath expr="//td[@groups='uom.group_uom']" position="replace">
+                <td class="o_mrp_bom_qty" groups="uom.group_uom"><span><t t-esc="l['prod_uom']"/></span></td>
+                <td class="text-right o_mrp_on_hand o_hidden"><span><t t-esc="l['qty_available']" t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'/></span></td>
+                <td class="text-right o_mrp_on_hand o_hidden"><span><t t-esc="l['qty_pre_available']" t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'/></span></td>
+                <td class="text-right o_mrp_on_hand o_hidden"><span><t t-esc="l['qty_forecasted']" t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'/></span></td>
+            </xpath>
+            <xpath expr="//td[@name='td_opr']" position="after">
+                <td class="o_mrp_on_hand o_hidden"></td>
+            </xpath>
+            <xpath expr="//tr[@class='o_mrp_bom_report_line o_mrp_bom_cost']/td[@groups='uom.group_uom']" position="after">
+                <td class="o_mrp_on_hand o_hidden"></td>
+                <td class="o_mrp_on_hand o_hidden"></td>
+                <td class="o_mrp_on_hand o_hidden"></td>
+            </xpath>
+            <xpath expr="//td[@name='td_mrp_bom']" position="after">
+                <td class="text-center o_mrp_on_hand o_hidden"><span><input name="small_header" type="checkbox" t-att-checked="l['is_purchase'] or None" onclick="return false;"/></span></td>
+            </xpath>
+        </template>
+
+        <template id="report_mrp_operation_line_inherit_clear_to_build" inherit_id="mrp.report_mrp_operation_line">
+            <xpath expr="//td[@name='td_opr_line']" position="after">
+                <td class="o_mrp_on_hand o_hidden"></td>
+                <td class="o_mrp_on_hand o_hidden"></td>
+                <td class="o_mrp_on_hand o_hidden"></td>
+                <td class="o_mrp_on_hand o_hidden"></td>
+            </xpath>
+        </template>
+
+
+
+</odoo>

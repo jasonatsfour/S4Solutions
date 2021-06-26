@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+     <form class="form-inline" t-name="mrp.report_bom_search">
+
+         <div class="form-group col-lg-4">
+            <select class="o_input o_mrp_bom_report_warehouse o_hidden" id="o_mrp_bom_report_warehouse">
+                <option value="0">Warehouse Selection</option>
+                <option t-foreach="warehouse_data" t-as="warehouse" t-att-value="warehouse['id']">
+                    <t t-esc="warehouse['name']"/>
+                </option>
+            </select>
+        </div>
+
+
+        <div class="form-group col-lg-3">
+            <label>Quantity:</label>
+            <div class="row">
+                <div class="col-lg-6">
+                    <input type="number" step="any" t-att-value="bom_qty" min="1" class="o_input o_mrp_bom_report_qty"/>
+                </div>
+                <div class="col-lg-6">
+                    <t t-if="is_uom_applied" t-esc="bom_uom_name"/>
+                </div>
+            </div>
+        </div>
+        <div t-if="is_variant_applied" class="form-group col-lg-4">
+            <label>Variant:</label>
+            <select class="o_input o_mrp_bom_report_variants">
+                <option t-foreach="variants" t-as="variant" t-att-value="variant">
+                    <t t-esc="variants[variant]"/>
+                </option>
+            </select>
+        </div>
+        <div t-attf-class="form-group #{is_variant_applied ? 'col-lg-3' : 'col-lg-4'}">
+            <label>Reports:</label>
+            <select class="o_input o_mrp_bom_report_type">
+                <option t-att-data-type="'all'">BoM Structure &amp; Cost</option>
+                <option t-att-data-type="'bom_structure'">BoM Structure</option>
+                <option t-att-data-type="'clear_to_build'">Clear to Build</option>
+            </select>
+        </div>
+    </form>
+</templates>

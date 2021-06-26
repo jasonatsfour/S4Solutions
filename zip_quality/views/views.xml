@@ -1,0 +1,25 @@
+<odoo>
+    <record model="ir.ui.view" id="product_template_product_zipline_quality">
+		<field name="name">Product Template (form)</field>
+		<field name="model">product.template</field>
+		<field name="inherit_id" ref="product.product_template_form_view"/>
+		<field name="arch" type="xml">
+			<page name="general_information"  position="after">
+				<page string="Quality" name="quality">
+					<div class="mt16 row">
+						<label for="x_aql"/>
+                    	<field name="x_aql" string="AQL"/>
+                    </div>
+                    <div class="mt16 row">
+                    	<label for="x_time"/>
+            			<field name="x_time" string="Inspection Time(per part)"/>
+            		</div>
+            		<div class="mt16 row">
+            			<label for="x_ip"/>
+            			<field name="x_ip" string="Inspection Plan" widget="url" text="Inspection Plan Google Sheet"/>
+            		</div>
+				</page>
+			</page>
+		</field>
+    </record>
+</odoo>

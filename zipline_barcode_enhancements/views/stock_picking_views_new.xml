@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+	<record id="stock_picking_type_inherite_form" model="ir.ui.view">
+		<field name="name">stock.picking.type.inherite.form</field>
+		<field name="model">stock.picking.type</field>
+		<field name="inherit_id" ref="stock.view_picking_type_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='barcode']" position="after">
+				<field name="force_scan"/>
+			</xpath>
+		</field>
+	</record>
+
+	<record id="stock_picking_inherite_form" model="ir.ui.view">
+		<field name="name">stock.picking.inherite.form</field>
+		<field name="model">stock.picking</field>
+		<field name="inherit_id" ref="stock.view_picking_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='origin']" position="after">
+				<field name="order_scanned" invisible="1"/>
+			</xpath>
+		</field>
+	</record>
+</odoo>

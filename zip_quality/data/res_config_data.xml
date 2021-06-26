@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--record id="zipline_config_settings" model="zipline.config.settings">
+        <field name="aras_url" eval="True"/>
+        <field name="aras_user" eval="False"/>
+        <field name="aras_password" eval="True"/>
+        <field name="aras_database" eval="True"/>
+    </record>
+    <function model="res.config.settings" name="execute">
+        <value model="res.config.settings"
+               search="[('id', '=', ref('zipline_config_settings'))]"/>
+    </function-->
+</odoo>
