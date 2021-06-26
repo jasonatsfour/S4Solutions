@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- vehicle flight log search view -->
+    <record id="vehicle_flight_log_view_search" model="ir.ui.view">
+        <field name="name">vehicle.flight.log.search</field>
+        <field name="model">vehicle.flight.log</field>
+        <field name="arch" type="xml">
+            <search string="Vehicle Flight Log">
+                <field name="flight_id"/>
+                <field name="vehicle_id"/>
+                <field name="date"/>
+                <group expand="0">
+                    <filter string="Date" name="date" context="{'group_by': 'date'}"/>
+                    <filter string="Vehicle" name="vehicle" context="{'group_by': 'vehicle_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="vehicle_flight_log_tree_view" model="ir.ui.view">
+        <field name="name">vehicle.flight.log.tree</field>
+        <field name="model">vehicle.flight.log</field>
+        <field name="arch" type="xml">
+            <tree string="Vehicle Flight Log">
+                <field name="flight_id"/>
+                <field name="vehicle_id"/>
+                <field name="flight_count"/>
+                <field name="flight_hours"/>
+                <field name="date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="vehicle_flight_log_form_view" model="ir.ui.view">
+        <field name="name">vehicle.flight.log.form</field>
+        <field name="model">vehicle.flight.log</field>
+        <field name="arch" type="xml">
+            <form string="Vehicle Flight Log">
+                <sheet>
+                    <group>
+                        <group cols="4">
+                            <field name="flight_id"/>
+                            <field name="vehicle_id" required="1"/>
+                            <field name="date"/>
+                        </group>
+                        <group cols="4">
+                            <field name="flight_hours" required="1"/>
+                            <field name="flight_count"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id='action_vehicle_flight_log' model='ir.actions.act_window'>
+        <field name="name">Vehicle Flight Log</field>
+        <field name="res_model">vehicle.flight.log</field>
+        <field name="view_mode">tree,kanban,form,graph</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a new vehicle flight log.
+            </p>
+        </field>
+    </record>
+</odoo>

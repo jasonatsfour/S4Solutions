@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" name="kanban_fleet_services assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <!-- JS -->
+            <script type="text/javascript"
+                    src="/fleet_kanban_services_base/static/src/js/kanban_services.js"></script>
+            <!-- JS -->
+            <script type="text/javascript"
+                    src="/fleet_kanban_services_base/static/src/js/bootstrap-multiselect.js"></script>
+            <link rel="stylesheet"
+                  href="/fleet_kanban_services_base/static/src/less/kanban_services.less"/>
+            <!-- CSS -->
+            <link rel="stylesheet"
+                  type="text/css"
+                  href="/fleet_kanban_services_base/static/src/css/kanban_services.css"/>
+            <!-- CSS -->
+            <link rel="stylesheet"
+                  type="text/css"
+                  href="/fleet_kanban_services_base/static/src/css/bootstrap-multiselect.css"/>
+        </xpath>
+    </template>
+</odoo>

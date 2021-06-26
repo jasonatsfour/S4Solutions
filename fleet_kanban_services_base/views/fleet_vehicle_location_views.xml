@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="fleet_vehicle_location_view_tree" model="ir.ui.view">
+        <field name="name">fleet.vehicle.location.view.tree</field>
+        <field name="model">fleet.vehicle.location</field>
+        <field name="arch" type="xml">
+            <tree editable="top">
+                <field name="name" required="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="fleet_vehicle_location_view_form" model="ir.ui.view">
+        <field name="name">fleet.vehicle.location.view.form</field>
+        <field name="model">fleet.vehicle.location</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" required="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="fleet_vehicle_location_view_kanban" model="ir.ui.view">
+        <field name="name">fleet.vehicle.location.view.kanban</field>
+        <field name="model">fleet.vehicle.location</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div>
+                                <strong>
+                                    <field name="name"/>
+                                </strong>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="fleet_vehicle_location_action" model="ir.actions.act_window">
+        <field name="name">Vehicle Location</field>
+        <field name="res_model">fleet.vehicle.location</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_ids" eval="[
+            (5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('fleet_vehicle_location_view_tree')}),
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('fleet_vehicle_location_view_kanban')})]"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a new Repair Type.</p>
+        </field>
+    </record>
+</odoo>

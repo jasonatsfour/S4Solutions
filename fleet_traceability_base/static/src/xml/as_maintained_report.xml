@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template xml:space="preserve">
+    <!--As-Maintained Report Screen-->
+    <t t-name="AsMaintainedReport">
+        <div class="container">
+            <div class="row">
+                <div class="o_stock_reports_page o_stock_reports_no_print report_background">
+                    <h1><span>As-Maintained Traceability Report</span></h1>
+                    <div>
+                        <button id="expand_button" type="button" class="btn btn-primary o_expand_button">
+                            <span>EXPAND</span>
+                        </button>
+                        <button id="button_collapse" type="button" class="btn btn-primary o_button_collapse">
+                            <span>COLLAPSE</span>
+                        </button>
+                    </div>
+                    <div class="o_stock_reports_table">
+                        <table width='100%' class="as_maintained_table table">
+                            <thead>
+                                <tr class="o_report_header">
+                                    <th class="o_report_line_header">INSTALLED LOCATION</th>
+                                    <th class="o_report_line_header">PRODUCT NUMBER</th>
+                                    <th class="o_report_line_header">PRODUCT</th>
+                                    <th class="o_report_line_header">PRODUCT ID</th>
+                                    <th class="o_report_line_header">VERSION</th>
+                                    <th class="o_report_line_header">ACTIONS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</template>

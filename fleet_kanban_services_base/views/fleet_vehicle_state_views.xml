@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="fleet_vehicle_state_view_tree_inherit_fleet_kanban_services_base" model="ir.ui.view">
+        <field name="name">fleet.vehicle.state.tree.inherit_fleet_kanban_services_base</field>
+        <field name="model">fleet.vehicle.state</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_state_view_tree"/>
+        <field name="arch" type="xml">
+            <field name='name' position="after">
+                <field name="is_grounded"/>
+            </field>
+        </field>
+    </record>
+</odoo>

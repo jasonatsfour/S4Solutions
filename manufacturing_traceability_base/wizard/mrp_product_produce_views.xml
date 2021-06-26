@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_mrp_product_produce_wizard_inherit_manufacturing_traceability_base" model="ir.ui.view">
+        <field name="name">MRP.Product.Produce.inherit_manufacturing_traceability_base</field>
+        <field name="model">mrp.product.produce</field>
+        <field name="inherit_id" ref="mrp.view_mrp_product_produce_wizard"/>
+        <field name="arch" type="xml">
+            <field name="serial" position="after">
+                <field name="partial_serialization_id" invisible="1"/>
+                <field name="partial_serialization_type" invisible="1"/>
+            </field>
+            <xpath expr="//field[@name='raw_workorder_line_ids']/tree/field[@name='product_tracking']" position="attributes">
+                <attribute name='invisible'>0</attribute>
+            </xpath>
+            <xpath expr="//label[@for='finished_lot_id']" position="attributes">
+                <attribute name="attrs">{
+                    'invisible': [
+                        ('product_tracking', '=', 'none'),
+                        ('partial_serialization_id','=',False)
+                    ]}
+                </attribute>
+            </xpath>
+            <field name="finished_lot_id" position="attributes">
+                <attribute name="attrs">{
+                    'invisible': [
+                        ('product_tracking', '=', 'none'),
+                        ('partial_serialization_id','=',False)
+                    ],
+                    'required':[
+                        ('product_tracking', '!=', 'none'),
+                        ('partial_serialization_id','!=',False)
+                    ]}
+                </attribute>
+            </field>
+            <button name="action_generate_serial" position="attributes">
+                <attribute name="attrs">{
+                    'invisible': [
+                        '&amp;',
+                        '|',
+                        ('finished_lot_id', '!=', False),
+                        ('product_tracking', '=', 'none'),
+                        ('partial_serialization_id','=',False)
+                    ]}
+                </attribute>
+            </button>
+            <xpath expr="//field[@name='raw_workorder_line_ids']/tree/field[@name='lot_id']" position="after">
+                <field name="partial_serialization_id" invisible="1"/>
+                <field name="partial_serialization_type" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='raw_workorder_line_ids']/tree/field[@name='lot_id']" position="attributes">
+                <attribute name="attrs">{
+                    'readonly': [
+                        ('product_tracking', '=', 'none'),
+                        ('partial_serialization_id','=',False)
+                    ]}
+                </attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

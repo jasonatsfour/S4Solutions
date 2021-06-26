@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<odoo>
+    <record id="view_production_lot_form_inherit_fleet_traceability_base" model="ir.ui.view">
+        <field name="name">stock.production.lot.form.inherit_fleet_traceability_base</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="%(action_as_maintained_report)d"
+                        icon="fa-arrow-up"
+                        class="oe_stat_button"
+                        string="As-Maintained Traceability"
+                        type="action"/>
+            </xpath>
+            <field name="ref" position="after">
+                <field name="location_id"/>
+                <field name="lot_version" string="Version" readonly="1"/>
+                <field name="is_non_traceable" invisible="1" readonly="1"/>
+            </field>
+            <xpath expr="//form/sheet/notebook/page" position="before">
+                <page string="As-Maintained Lot History"
+                      name="as_maintained_history"
+                      attrs="{'invisible': [('lot_ids', '!=', [])]}">
+                    <field name="as_maintained_history_ids">
+                        <tree editable="top" create="0">
+                            <field name="lot_type" readonly="1"/>
+                            <field name="repair_order_line_id" invisible="1"/>
+                            <field name="as_maintained_child_lot_id" string="Lot/Serial" readonly="1"/>
+                            <field name="product_id" readonly="1"/>
+                            <field name="product_uom_qty" readonly="1"/>
+                            <field name="price_unit" readonly="1"/>
+                            <field name="location_id" readonly="1"/>
+                            <field name="location_dest_id" readonly="1"/>
+                            <field name="lot_id" readonly="1" invisible="1"/>
+                            <field name="as_maintained_parent_lot_id" invisible="1" readonly="1"/>
+                            <field name="origin_part_of_id" readonly="1" string="Installed Location"/>
+                            <field name="parent_lot_version" string="Version" readonly="1"/>
+                        </tree>
+                    </field>
+                </page>
+                <page string="As-Maintained Lot History"
+                      name="as_maintained_origin_lot_history"
+                      attrs="{'invisible': [('lot_ids', '=', [])]}">
+                    <field name="sub_part_history_ids">
+                        <tree editable="top" create="0">
+                            <field name="lot_type" readonly="1"/>
+                            <field name="repair_order_line_id" invisible="1"/>
+                            <field name="as_maintained_child_lot_id" string="Lot/Serial" readonly="1"/>
+                            <field name="product_id" readonly="1"/>
+                            <field name="product_uom_qty" readonly="1"/>
+                            <field name="price_unit" readonly="1"/>
+                            <field name="location_id" readonly="1"/>
+                            <field name="location_dest_id" readonly="1"/>
+                            <field name="lot_id" readonly="1" invisible="1"/>
+                            <field name="origin_part_of_id" readonly="1" invisible="1" string="Installed Location"/>
+                            <field name="as_maintained_parent_lot_id" readonly="1"/>
+                            <field name="parent_lot_version" string="Version" readonly="1"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <menuitem id="menu_action_production_lot_form_fleet"
+              action="stock.action_production_lot_form"
+              parent="fleet.fleet_configuration"
+              groups="stock.group_production_lot"
+              sequence="101"/>
+</odoo>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="mrp_production_workorder_lot_edit_form_view_inherited_statuses_heaviside" model="ir.ui.view">
+        <field name="name">mrp.production.work.order.lot_edit.form.statuses_heaviside</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="edit_lot_mrp.mrp_production_workorder_lot_edit_form_view_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='move_line_ids']/tree/field[@name='lot_id']"
+                   position="attributes">
+                <attribute name="domain">[('is_none_production', '=', False)]</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="mrp_workorder_view_inherited_form_tablet_inherited_statuses_heaviside" model="ir.ui.view">
+        <field name="name">mrp.workorder.view.inherit.form.tablet.inherited.statuses.heaviside</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="manufacturing_traceability.mrp_workorder_view_inherited_form_tablet"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('o_workorder_lot')]/field[@name='lot_id']" position="attributes">
+                <attribute name="domain">[
+                    ('is_none_production', '=', False),
+                    ('product_id', '=', component_id),
+                    ('stock_production_lot_status_id.key', 'in', ['available', 'inventory']),
+                    '|', ('company_id', '=', False), ('company_id', '=', company_id)
+                    ]
+                </attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

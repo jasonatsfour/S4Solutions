@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="fleet_vehicle_service_types_view_tree_inherit_fleet_kanban_services_base" model="ir.ui.view">
+        <field name="name">fleet.service.type.tree.inherit_fleet_kanban_services_base</field>
+        <field name="model">fleet.service.type</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_service_types_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="inactive"/>
+                <field name="moc"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="fleet_service_type_search_view" model="ir.ui.view">
+        <field name="name">fleet.service.type.search.view</field>
+        <field name="model">fleet.service.type</field>
+        <field name="arch" type="xml">
+            <search string="Service Type">
+                <field name="inactive"/>
+                <field name="moc"/>
+                <filter name="inactive" string="Inactive" domain="[('inactive', '=', True)]"/>
+                <group expand="0">
+                    <filter name="group_by_inactive" string="Inactive" context="{'group_by': 'inactive'}"/>
+                    <filter name="group_by_moc" string="Moc" context="{'group_by': 'moc'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="fleet_vehicle_model_search_view" model="ir.ui.view">
+        <field name="name">fleet.vehicle.model.search.view</field>
+        <field name="model">fleet.vehicle.model</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_model_view_search"/>
+        <field name="arch" type="xml">
+            <field name="brand_id" position="after">
+                <field name="manager_id"/>
+            </field>
+            <xpath expr="//group" position="inside">
+                <filter name="group_by_manager_id" string="Manager" context="{'group_by': 'manager_id'}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

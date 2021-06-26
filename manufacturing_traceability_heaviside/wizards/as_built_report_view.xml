@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="as_built_report_form">
+        <field name="name">as_built_report.form</field>
+        <field name="model">as.build.report</field>
+        <field name="arch" type="xml">
+            <form string="As Built Report">
+                    <group>
+                        <field name="manufacture_ids" widget='many2many_tags'/>
+                    </group>
+                <footer>
+                    <button string="Print" class="btn btn-primary" type="object" name="action_repair_order" context="{'default_mo_ids':active_ids}"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+   
+    <act_window id="action_as_built_report"
+            name="As Built Report"
+            binding_model="mrp.production"
+            res_model="as.build.report"
+            view_mode="form" target="new"/>
+</odoo>

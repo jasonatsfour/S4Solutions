@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates xml:space="preserve">
+    <t t-extend="stockReports.buttons" t-name="stockReports.buttons">
+        <t t-jquery="button.o_stock-widget-pdf" t-operation="after">
+            <!--Add Shows and Hide Buttons-->
+            <button id="show_goods_movement" type="button" class="btn btn-primary o_button_expand">
+                SHOW GOODS MOVEMENTS
+            </button>
+            <button id="hide_goods_movement" type="button" class="btn btn-primary o_button_compose">
+                HIDE GOODS MOVEMENTS
+            </button>
+            <!--Add Shows and Hide Buttons for Lot/Serial-->
+            <button id="show_lot_serial_movement" type="button" class="btn btn-primary o_button_expand_lot">
+                SHOW Lot/Serial MOVEMENTS
+            </button>
+           <!--  <button id="hide_lot_serial_movement" type="button" class="btn btn-primary o_button_compose_lot">
+                HIDE Lot/Serial MOVEMENTS
+            </button> -->
+        </t>
+    </t>
+</templates>

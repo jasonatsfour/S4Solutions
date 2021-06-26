@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" name="fleet_traceability_base assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <!-- JS -->
+            <script type="text/javascript"
+                    src="/fleet_traceability_base/static/src/js/as_maintained_report_backend.js"></script>
+            <link rel="stylesheet"
+                  href="/fleet_traceability_base/static/src/css/as_maintained_report.css"></link>
+        </xpath>
+    </template>
+</odoo>

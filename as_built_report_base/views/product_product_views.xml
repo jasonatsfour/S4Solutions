@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tracebility rename in varient -->
+    <record id="product_normal_form_view_inherit_as_built_report_base" model="ir.ui.view">
+        <field name="name">product.product.form.inherit_as_built_report_base</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_view_stock_move_lines']" position="attributes">
+                <attribute name="string">As-Built Traceability</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<odoo>
+    <template id="add_lot_serial_number" name="List of Lot Serial Number">
+        <div id="modal_lot_serial_number_lists" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button"
+                                class="close"
+                                data-dismiss="modal"
+                                aria-hidden="true">
+                            <span>x</span>
+                        </button>
+                        <h2 class="modal-title" id="myModalLabel">
+                            <strong>
+                                <span>Adding Lot Serial Number</span>
+                            </strong>
+                        </h2>
+                    </div>
+                    <div class="modal-body" id="lot_ids">
+                        <div class="form-group radio-container input-required" id="traceability">
+                            <input type="hidden" id="available_lot_status" t-att-value="available_lot_status"/>
+                            <input type="hidden" id="parent_lot_id" t-att-value="parent_lot_id"/>
+                            <label class="control-label">Type:</label>
+                            <br/>
+                            <input type="radio"
+                                   name="traceable_type"
+                                   value="traceable"
+                                   checked="checked">
+                                <span>Traceable</span>
+                            </input>
+                            <br/>
+                            <input type="radio"
+                                   name="traceable_type"
+                                   value="non_traceable">
+                                <span>Non-Traceable</span>
+                            </input>
+                        </div>
+                        <div class="form-group radio-container input-required">
+                            <div class="col-md-3 mt16" id="traceable_lot">
+                                <button type="button"
+                                        class="btn btn-primary open_lot_search_panel">
+                                    <span>Search or Create</span>
+                                </button>
+                                <br/>
+                                <label class="control-label mt16">
+                                    <span>Lot Serial Number:</span>
+                                </label>
+                                <input type="hidden"
+                                       name="new_selected_lot_id"
+                                       id="new_selected_lot_id"
+                                       readonly="readonly"/>
+
+                                <input type="text"
+                                       name="lot_number"
+                                       id="traceable_lot_number"
+                                       readonly="readonly"/>
+                            </div>
+                            <div class="col-md-3 mt16" id="non_traceable">
+                                <button type="button" class="btn btn-primary open_non_lot_search_panel">
+                                    <span>Search or Create</span>
+                                </button>
+                                <br/>
+                                <label class="control-label mt16">
+                                    <span>Non Traceable Lot Number:</span>
+                                </label>
+                                <input type="text"
+                                       name="non_lot_number"
+                                       id="non_traceable_lot_number"
+                                       readonly="readonly"/>
+                            </div>
+                            <small class="text-danger form-control-warning">
+                                <span>Please select an Lot Serial Number</span>
+                            </small>
+                            <h4 class="mt16">
+                                <strong>
+                                    <span t-esc="parent_lot_number"/>
+                                </strong>
+                                <span>will be add as Installed Location in the above selected lot number.</span>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="pull-left">
+                            <button type="button"
+                                    class="btn btn-primary serial_number_add">
+                                <span>Add</span>
+                            </button>
+                            <button type="button"
+                                    class="btn btn-default js_goto_event"
+                                    data-dismiss="modal">
+                                <span>Cancel</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="edit_lot_serial_number" name="Editing of Lot Serial Number">
+        <div id="modal_edit_lot_serial_number" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button"
+                                class="close"
+                                data-dismiss="modal"
+                                aria-hidden="true">
+                            <span>x</span>
+                        </button>
+                        <h2 class="modal-title" id="myModalLabel">
+                            <strong>
+                                <span>Editing Lot Serial Number</span>
+                            </strong>
+                        </h2>
+                    </div>
+                    <div class="modal-body" id="lot_ids">
+                        <div class="form-group radio-container input-required" id="traceability">
+                            <input type="hidden"
+                                   id="available_lot_status"
+                                   t-att-value="available_lot_status"/>
+                            <label class="control-label">Type:</label>
+                            <br/>
+                            <input type="radio"
+                                   name="traceable_type"
+                                   value="traceable"
+                                   checked="checked">
+                                <span>Traceable</span>
+                            </input>
+                            <br/>
+                            <input type="radio"
+                                   name="traceable_type"
+                                   value="non_traceable">
+                                <span>Non-Traceable</span>
+                            </input>
+                        </div>
+                        <div class="form-group radio-container input-required">
+                            <div class="col-md-3 mt16" id="traceable_lot">
+                                <button type="button"
+                                        class="btn btn-primary open_lot_search_panel">
+                                    <span>Search or Create</span>
+                                </button>
+                                <br/>
+                                <label class="control-label mt16">
+                                    <span>Lot Serial Number:</span>
+                                </label>
+                                <input type="hidden"
+                                       name="traceable_lot_id"
+                                       id="traceable_lot_id"
+                                       readonly="readonly"/>
+                                <input type="text"
+                                       name="lot_number"
+                                       id="traceable_lot_number"
+                                       readonly="readonly"/>
+                            </div>
+                            <div class="col-md-3 mt16" id="non_traceable">
+                                <button type="button"
+                                        class="btn btn-primary open_non_lot_search_panel">
+                                    <span>Search or Create</span>
+                                </button>
+                                <br/>
+                                <label class="control-label mt16">
+                                    <span>Non Traceable Lot Number:</span>
+                                </label>
+                                <input type="text"
+                                       name="non_lot_number"
+                                       id="non_traceable_lot_number"
+                                       readonly="readonly"/>
+                            </div>
+                            <small class="text-danger form-control-warning">
+                                <span>Please select an Lot Serial Number.</span>
+                            </small>
+                            <h4 class="mt16">
+                                <span>Are you sure to replace the current lot number?</span>
+                                <strong>
+                                    <span>
+                                        <t t-esc="current_lot_number"/>
+                                        with the above selected lot number.
+                                    </span>
+                                </strong>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="pull-left">
+                            <button type="button"
+                                    class="btn btn-primary serial_number_edit">
+                                <span>Replace</span>
+                            </button>
+                            <button type="button"
+                                    class="btn btn-default js_goto_event"
+                                    data-dismiss="modal">
+                                <span>Cancel</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="remove_lot_serial_number" name="Remove Lot Serial Number">
+        <div id="modal_remove_lot_serial_number" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button"
+                                class="close"
+                                data-dismiss="modal"
+                                aria-hidden="true">
+                            <span>x</span>
+                        </button>
+                        <h2 class="modal-title" id="myModalLabel">
+                            <strong>
+                                <span>Removing Lot Serial Number</span>
+                            </strong>
+                        </h2>
+                    </div>
+                    <input type="hidden"
+                           class="from-control product_id"
+                           id="non_traceable"
+                           t-att-value="non_traceable_lot_rec"/>
+                    <div class="modal-body">
+                        <div class="form-group radio-container">
+                            <h4 class="text-warning">
+                                <span>Are you sure to remove this Lot Serial Number
+                                    "<t t-esc='lot_number'/>" from installed location of
+                                    "<t t-esc='parent_lot_number'/>"?
+                                </span>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="pull-left">
+                            <button type="button"
+                                    class="btn btn-primary serial_number_remove">
+                                <span>Yes</span>
+                            </button>
+                            <button type="button"
+                                    class="btn btn-default js_goto_event"
+                                    data-dismiss="modal">
+                                <span>Cancel</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+</odoo>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="fleet_repair_type_view_form_inherit_fleet_traceability_base" model="ir.ui.view">
+        <field name="name">fleet.repair.type.view.form.inherit_fleet_traceability_base</field>
+        <field name="model">fleet.repair.type</field>
+        <field name="inherit_id" ref="fleet_kanban_services_base.fleet_repair_type_view_form"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="is_as_maintained"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="fleet_repair_view_form_inherit_fleet_traceability_base" model="ir.ui.view">
+        <field name="name">fleet.repair.view.form.inherit_fleet_traceability_base</field>
+        <field name="model">fleet.repair</field>
+        <field name="inherit_id" ref="fleet_kanban_services_base.fleet_repair_view_form"/>
+        <field name="arch" type="xml">
+            <field name="type_id" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </field>
+            <field name="type_id" position="after">
+                <field name="is_as_maintained" invisible="1"/>
+                <field name="product_id" attrs="{'readonly': [('is_draft', '=', False)]}"/>
+                <field name="lot_id"
+                       domain="[('product_id', '=', product_id)]"
+                       attrs="{'readonly': [('is_draft', '=', False)]}"
+                       groups="stock.group_production_lot"/>
+            </field>
+            <field name="vehicle_id" position="attributes">
+                <attribute name="attrs">{
+                    'readonly': [('is_draft', '=', False)],
+                    'invisible': [('is_as_maintained', '!=', False)]
+                }</attribute>
+            </field>
+            <field name="tag_ids" position="attributes">
+                <attribute name="attrs">{'invisible': [('is_as_maintained', '!=', False)]}</attribute>
+            </field>
+            <page name="repair_note" position="attributes">
+                <attribute name="attrs">{'invisible': [('is_as_maintained', '!=', False)]}</attribute>
+            </page>
+            <page name="repair_approvals" position="attributes">
+                <attribute name="attrs">{'invisible': [('is_as_maintained', '!=', False)]}</attribute>
+            </page>
+            <page name="repair_extra_note" position="attributes">
+                <attribute name="attrs">{'invisible': [('is_as_maintained', '!=', False)]}</attribute>
+            </page>
+            <xpath expr="//field[@name='operations']/tree/field[@name='product_id']" position="attributes">
+                <attribute name="context">{'type': type, 'lot_id': parent.lot_id}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='operations']/tree/field[@name='lot_id']" position="attributes">
+                <attribute name="context">{
+                    'default_product_id': product_id,
+                    'default_company_id': parent.company_id,
+                    'type': type,
+                    'product_id': product_id,
+                    'parent_lot_id': parent.lot_id
+                }</attribute>
+            </xpath>
+            <xpath expr="//field[@name='operations']/tree/field[@name='lot_id']" position="after">
+                <field name="replacement_lot_id"
+                       attrs="{'readonly': [('type', '!=', 'edit')]}"
+                       context="{
+                        'default_product_id': product_id,
+                        'default_company_id': parent.company_id,
+                        'edit_type': type,
+                        'parent_lot_id': parent.lot_id
+                        }"/>
+                <field name="parent_lot_id" invisible="1"/>
+                <field name="origin_part_of_id"
+                       context="{
+                       'get_children': parent_lot_id
+                       }"
+                       options="{'no_create_edit': True}"
+                       string="Installed Lot"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

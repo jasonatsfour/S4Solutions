@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template xml:space="preserve">
+<!--Kiosk Screen-->
+    <t t-name="fleet_services_kanban_template">
+        <div class="container">
+            <div class="row row_discrepancy_custom">
+                <!--Kiosk Container-->
+                <div class="row col-md-9 col-md-offset-1 mt32 alert alert-success mx-auto" id="discrepancy_created">
+                    <div class="col-xs-12" id="vehicle_discrepancy_record"></div>
+                    <div class="col-xs-12 mt16" id="vehicle_services_record"></div>
+                    <div class="col-xs-12 mt16">
+                        <p class="text-center">Now you may:</p>
+                    </div>
+                    <div class="col-xs-12 mt16" id="open_repair_order">
+                        <!-- <span>
+                            <b><span >Create a new Repair Order </span></b>
+                            for Service Request
+                        </span> -->
+                    </div>
+                    <div class="col-xs-12 mt16" id="repair_order_list">
+                        <span>
+                            <b><a>Add</a></b>
+                            <span>Service Request # to an existing Repair Order</span>
+                        </span>
+                    </div>
+                    <div class="col-xs-12 mt16" id="new_discrepancy_record">
+                        <!-- <input type="text" name="prev_barcode" id="prev_barcode"/> -->
+                        <span>
+                            <b><a>Create</a></b>
+                            <span>another Discrepancy for Vehicle</span>
+                        </span>
+                    </div>
+                    <!-- <div class="col-xs-12" id="new_discrepancy_record">
+                    </div> -->
+                    <div class="col-xs-12 mt16" id="open_all_service_request">
+                        <span>
+                            <b><a>View</a></b>
+                            <span>all Service Requests for Vehicle</span>
+                        </span>
+                    </div>
+                    <div class="col-xs-12 mt32">
+                        <button type="button" style="margin-right:50px" id="cancel_scan"
+                                class="btn btn-danger">Clear</button>
+                    </div>
+                </div>
+                <div class="o_fleet_services_kiosk_mode_container mx-auto">
+                    <!--Warning when Barcode Unmatched-->
+                    <div class="row" id="barcode_unmatched">
+                        <div class="alert alert-danger">
+                            <span>The scanned vehicle number is not a valid number. Please check the number before scanning again.</span>
+                        </div>
+                    </div>
+                    <!-- Kiosk Screen-->
+                    <div class="o_fleet_services_kiosk_mode">
+                        <h1>Scan the vehicle number here</h1>
+                        <form>
+                            <div class="form-group">
+                                <input type="text" class="form-control barcode_field" id="barcode"/>
+                                <!-- <div id="open_vehicle_discrepancy_form"> -->
+                                <i class="fa fa-sign-in btn-primary o_barcode_fleet_services_scan"/>
+                                <!-- </div> -->
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row col-md-10 col-md-offset-1 mx-auto" id="barcode_matched">
+                <div class="col-md-12 col-md-offset-1">
+                    <div class="col-md-5 form-group o_website_form_required_custom">
+                        <label class="control-label">Vehicle Number:</label>
+                        <input type="hidden" id="vehicle_id" class="form-control o_website_form_input col-md-3"/>
+                        <input type="hidden" id="x_serial_no" class="form-control o_website_form_input col-md-3"/>
+                        <input type="text" id="vehicle_number" class="form-control o_website_form_input"
+                               name="vehicle_number" readonly="1"/>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <label class="control-label">Location:</label>
+                        <input type="text" id="x_location" class="form-control o_website_form_input" name="location"
+                               readonly="1"/>
+                        <input type="hidden" id="x_location_id" class="form-control o_website_form_input"
+                               name="location" readonly="1"/>
+                    </div>
+                </div>
+                <div class="col-md-12 col-md-offset-1">
+                    <div class="col-md-5 form-group">
+                        <label class="control-label">Vehicle Availability:</label>
+                        <input type="text" id="x_availability" class="form-control o_website_form_input"
+                               name="x_availability" required="True" readonly="1"/>
+                        <!--  <input type="text" id="availability" class="form-control o_website_form_input" name="x_flight_hours" readonly="1"/> -->
+                        <!-- <select class="form-select select-selected" id="availability" data-toggle="tooltip" name="priority" required="True">
+                            <option value="available">Available</option>
+                            <option value="grounded">Grounded</option>
+                            <option value="out_for_service">Out For Service</option>
+                            <option value="unavailable">Unavailable</option>
+                            <option value="see_flightdocs">See Flightdocs</option>
+                        </select> -->
+                    </div>
+                    <div class="col-md-5 form-group o_website_form_required_custom">
+                        <label class="control-label">Flights Hours:</label>
+                        <input type="number" id="x_flight_hours" class="form-control o_website_form_input"
+                               name="x_flight_hours" required="True" readonly="1"/>
+                    </div>
+                </div>
+                <div class="col-md-12 col-md-offset-1">
+                    <div class="col-md-5 form-group o_website_form_required_custom">
+                        <label class="control-label">HW Version:</label>
+                        <input type="text" id="x_hw_config" class="form-control o_website_form_input" name="x_hw_config"
+                               required="True" readonly="1"/>
+                    </div>
+                    <div class="col-md-5 form-group o_website_form_required_custom" style="display:none;">
+                        <label class="control-label">Discrepancy Type:</label>
+                        <select class="form-select select-selected" data-toggle="tooltip" id="discrepancy_type"
+                                required="True">
+                        </select>
+                    </div>
+                    <div class="col-md-5 form-group o_website_form_required_custom">
+                        <label class="control-label">Observed Date:</label>
+                        <input type="datetime-local" id="observed_date" class="form-control o_website_form_input"
+                               name="observed_date"/>
+                    </div>
+                </div>
+                <div class="col-md-12 col-md-offset-1">
+                    <div class="col-md-5 form-group o_website_form_required_custom">
+                        <label class="col-form-label">Grounding Status:</label>
+                        <input type="hidden" id="is_grounded" class="form-control o_website_form_input col-md-3"/>
+                        <select class="form-select select-selected" id="priority" data-toggle="tooltip" name="priority"
+                                required="required">
+                            <option value="non-critical">Non-Grounded</option>
+                            <option value="critical">Grounded</option>
+                        </select>
+                    </div>
+                    <div class="col-md-5 form-group o_website_form_required_custom">
+                        <label class="control-label">Observed During:</label>
+                        <select class="form-select select-selected" data-toggle="tooltip" id="observed_during"
+                                required="required">
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12 col-md-offset-1">
+                    <div class="col-md-5 form-group">
+                        <label class="control-label">Title:</label>
+                        <input type="text" id="title" class="form-control o_website_form_input" name="title"/>
+                    </div>
+                    <div class="col-md-5 mt16 form-group o_website_form_required_custom">
+                        <label class="control-label" id="reason">HW Failure Mode:</label>
+                        <select class="form-select select-selected" multiple="multiple" data-toggle="tooltip"
+                                id="hw_failure_mode" style="width: max-content;" required="required">
+                        </select>
+                    </div>
+                    <div class="col-md-10 form-group">
+                        <label class="control-label">Description:</label>
+                        <textarea id="description" class="form-control o_website_form_input" rows="5"
+                                  placeholder="Add Description here"/>
+                    </div>
+                </div>
+                <div class="col-md-12 col-md-offset-1">
+                     <button id="attachment_del" style="color: cadetblue;" type="button" class="btn btn-default btn-xs">DELETE</button>
+                    <div class="col-md-12">
+                        <div class="col-md-10 gallery">
+                    </div>
+                </div>
+                    <div class="col-md-5 custom-file">
+                      <!--   <input type="file" class="custom-file-input" id="p_img_upload" name="img" multiple="multiple"  data-show-upload="true" data-show-caption="true" data-show-preview="true"/> -->
+                        <input type="file" class="o_portal_chatter_file_input custom-file-input" multiple="multiple"
+                               id="p_img_upload" name="img" data-show-caption="true" data-show-preview="true"
+                               data-show-upload="true"/>
+                    </div>
+                    <div class="col-md-12 mt32 form-group">
+                        <button type="button" id="discrepancy_confirm_button" class="btn btn-primary">Confirm</button>
+                        <button type="button" id="cancel_scan" class="btn btn-danger">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</template>

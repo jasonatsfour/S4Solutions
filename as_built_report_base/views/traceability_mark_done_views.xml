@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- vehicle flight log  form view -->
+    <record id="traceability_mark_done_form_view" model="ir.ui.view">
+        <field name="name">traceability.mark.done.form</field>
+        <field name="model">traceability.mark.done</field>
+        <field name="arch" type="xml">
+            <form string="Traceability for Moves">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="reference"/>
+                            <field name="operation_type"/>
+                            <field name="product_id"/>
+                            <field name="production_id"/>
+                        </group>
+                        <group>
+                            <field name="repair_id"/>
+                            <field name="move_line_id"/>
+                            <field name="lot_id"/>
+                            <field name="qty_done"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="traceability_mark_done_tree_view" model="ir.ui.view">
+        <field name="name">traceability.mark.done.tree</field>
+        <field name="model">traceability.mark.done</field>
+        <field name="arch" type="xml">
+            <tree string="Traceability for Moves">
+                <field name="reference"/>
+                <field name="operation_type"/>
+                <field name="product_id"/>
+                <field name="production_id"/>
+                <field name="repair_id"/>
+                <field name="move_line_id"/>
+                <field name="lot_id"/>
+                <field name="qty_done"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

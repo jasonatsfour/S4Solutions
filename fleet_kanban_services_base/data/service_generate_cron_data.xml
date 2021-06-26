@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<odoo noupdate="1">
+    <record id="service_generate_cron" model="ir.cron">
+        <field name="name">Generate Recurring Services for Fleet</field>
+        <field name="model_id" ref="model_recurring_service_plan"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_generate_services()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">months</field>
+        <field name="numbercall">-1</field>
+    </record>
+</odoo>

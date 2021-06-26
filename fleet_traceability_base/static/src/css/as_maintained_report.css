@@ -1,0 +1,74 @@
+html .o_web_client > .o_action_manager {
+    overflow: auto;
+}
+
+.search_panel {
+    padding: 0px 0px;
+    border: 0px;
+    border: none;
+    border-color: none;
+}
+
+.search_panel:after {
+    border: none;
+    border-color: none;
+}
+
+.custom_minus {
+    margin-left: 5px;
+    color: red;
+}
+
+.custom_plus {
+    color: green;
+}
+
+.o_stock_reports_page .o_stock_reports_caret_icon {
+    margin-left: 3px;
+}
+
+.report_background {
+    background: #f1efe9;
+}
+
+.edit_button {
+    background-color: #84e2f6; /* Blue */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 3px 2px;
+    cursor: pointer;
+    padding: 0px 10px;
+    border-radius: 4px;
+}
+
+.add_button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 3px 2px;
+    cursor: pointer;
+    padding: 0px 10px;
+    border-radius: 4px;
+}
+
+.delete_button {
+    background-color: #d9534e; /* Red */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 3px 2px;
+    cursor: pointer;
+    padding: 0px 10px;
+    border-radius: 4px;
+}

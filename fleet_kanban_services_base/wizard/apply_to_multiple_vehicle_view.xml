@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_apply_multiple_vehicle" model="ir.ui.view">
+        <field name="name">Apply Service to Multiple Form</field>
+        <field name="model">apply.multiple.vehicle.wiz</field>
+        <field name="arch" type="xml">
+            <form string="Invoice Sales Order">
+                <p class="oe_grey">Please Select Vehicles</p>
+                <group>
+                    <field name="vehicle_ids"/>
+                </group>
+                <footer>
+                    <button name="create_multiple_vehicle_services"
+                            string="Apply"
+                            type="object"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_apply_multiple_vehicle" model="ir.actions.act_window">
+        <field name="name">Apply SR to Multiple Vehicles</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">apply.multiple.vehicle.wiz</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="fleet_kanban_services_base.model_vehicle_services"/>
+    </record>
+</odoo>

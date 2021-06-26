@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="vehicle_service_state_tree_view" model="ir.ui.view">
+        <field name="name">vehicle.service.state.tree</field>
+        <field name="model">vehicle.service.state</field>
+        <field name="arch" type="xml">
+            <tree string="Vehicle Discrepancy State">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="vehicle_service_state_form_view" model="ir.ui.view">
+        <field name="name">vehicle.service.state.form</field>
+        <field name="model">vehicle.service.state</field>
+        <field name="arch" type="xml">
+            <form string="Vehicle Discrepancy State">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group>
+                            <field name="folded"/>
+                        </group>
+                        <group>
+                            <field name="is_draft"/>
+                            <field name="in_progress"/>
+                            <field name="final_stage"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id='action_vehicle_service_state' model='ir.actions.act_window'>
+        <field name="name">Service Stages</field>
+        <field name="res_model">vehicle.service.state</field>
+        <field name="view_mode">tree,kanban,form,graph</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a new vehicle discrepancy Stage.
+            </p>
+        </field>
+    </record>
+</odoo>

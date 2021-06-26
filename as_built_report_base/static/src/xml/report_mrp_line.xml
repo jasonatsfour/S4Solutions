@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve" id="template">
+    <t t-extend="report_mrp_line">
+        <t t-jquery="tr" t-operation="replace">
+            <!--Get Res Model for line-->
+               <tr t-att-data-unfold="l.unfoldable" t-att-data-parent_id="l.parent_id" t-att-data-id="l.id"  t-att-data-model_id="l.model_id" t-att-data-model="l.model" t-att-class="trclass" t-att-data-lot_name="l.lot_name" t-att-data-lot_id="l.lot_id" t-att-data-res-model="l.res_model">
+            <t t-if="l.unfoldable == true"><t t-set="tdclass" t-value="'o_stock_reports_unfoldable'" /></t>
+            <t t-set="column" t-value="0" />
+            <t t-foreach="l.columns" t-as="c">
+                <t t-set="column" t-value="column + 1" />
+                <td style="white-space: nowrap;" t-att-data-id="l.id" t-att-data-model="l.model" t-att-data-model_id="l.model_id" t-att-class="tdclass" t-att-data-level="l.level" t-att-data-lot_name="l.lot_name" t-att-data-res-model="l.res_model">
+                    <t t-if="column == 1">
+                        <span t-att-style="space_td" t-att-class="domainClass"></span>
+                        <t t-if="l.unfoldable">
+                            <span class="o_stock_reports_unfoldable o_stock_reports_caret_icon"><i class="fa fa-fw fa-caret-right" role="img" aria-label="Unfold" title="Unfold"></i></span>
+                        </t>
+                    </t>
+                    <t t-if="l.reference == c">
+                        <span t-if="c" t-att-class="spanclass">
+                            <a t-att-data-active-id="l.res_id" t-att-data-res-model="l.res_model" class="o_stock_reports_web_action" href="#"><t t-raw="c" /></a>
+                        </span>
+                    </t>
+                    <t t-elif="l.product_id == c">
+                        <span t-if="c" t-att-class="spanclass">
+                            <a t-att-data-active-id="l.res_id" t-att-data-res-model="l.res_model" class="o_stock_reports_product_action" href="#"><t t-raw="c" /></a>
+                        </span>
+                    </t>
+
+                    <t t-elif="l.lot_name == c and l.lot_name != false">
+                            <span>
+                                <a class="o_stock_report_lot_action" href="#"><t t-raw="c"/></a>
+                            </span>
+                        </t>
+                    <t t-if="l.reference != c and l.lot_name != c">
+                        <t t-if="typeof c == 'string' || typeof c == 'number'">
+                            <t t-raw="c"/>
+                        </t>
+                        <t t-if="typeof c != 'string' &amp; typeof c != 'number'"><span t-att-style="c[1]">
+                            <t t-raw="c[0]"/>
+                        </span></t>
+                    </t>
+                </td>
+            </t>
+        </tr>
+
+    </t>
+</t>
+</templates>

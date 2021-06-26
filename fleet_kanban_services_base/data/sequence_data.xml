@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <!-- Sequences for Vehicle discrepancy -->
+    <record id="seq_vehicle_discrepancy" model="ir.sequence">
+        <field name="name">Vehicle Discrepancy</field>
+        <field name="code">vehicle.discrepancy</field>
+        <field name="prefix">NS</field>
+        <field name="padding">5</field>
+    </record>
+
+    <!-- Sequences for Vehicle Services -->
+    <record id="seq_vehicle_services" model="ir.sequence">
+        <field name="name">Vehicle Services</field>
+        <field name="code">vehicle.services</field>
+        <field name="prefix">SR</field>
+        <field name="padding">5</field>
+    </record>
+
+    <!-- Sequences for Vehicle Repair Order -->
+    <record id="seq_vehicle_repair_order" model="ir.sequence">
+        <field name="name">Repair Order</field>
+        <field name="code">fleet.repair</field>
+        <field name="prefix">RO</field>
+        <field name="padding">5</field>
+    </record>
+</odoo>

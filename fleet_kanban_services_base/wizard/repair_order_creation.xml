@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_repair_order_creation_wiz" model="ir.ui.view">
+        <field name="name">Repair Orders</field>
+        <field name="model">repair.order.creation.wiz</field>
+        <field name="arch" type="xml">
+            <form string="Invoice Sales Order">
+                <p class="oe_grey">Repair Order will be created in draft so that you can review them before validation.</p>
+                <footer>
+                    <button name="create_repair_order"
+                            string="Create and View Repair Order"
+                            type="object"
+                            context="{'open_repair': True}"
+                            class="btn-primary"/>
+                    <button name="create_repair_order"
+                            string="Create Repair Order"
+                            type="object"
+                            class="btn-primary"/>
+                    <button string="Cancel"
+                            class="btn-secondary"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_view_repair_order_creation" model="ir.actions.act_window">
+        <field name="name">Repair Order</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">repair.order.creation.wiz</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="fleet_kanban_services_base.model_vehicle_services"/>
+    </record>
+
+    <record id="view_repair_order_existing_wiz" model="ir.ui.view">
+        <field name="name">Repair Orders</field>
+        <field name="model">repair.order.creation.wiz</field>
+        <field name="arch" type="xml">
+            <form string="Invoice Sales Order">
+                <p class="oe_grey">Select existing Repair Order and add selected Services in to that Repair Order.</p>
+                <group>
+                    <field name="vehicle_id" invisible="1"/>
+                    <field name="stage_id" invisible="1"/>
+                    <field name="repair_id"
+                           domain="[('vehicle_id', '=', vehicle_id), ('stage_id', '!=', stage_id)]"
+                           required="1"
+                           widget="selection"/>
+                </group>
+                <footer>
+                    <button name="create_repair_order"
+                            string="Create and View Repair Order"
+                            type="object"
+                            id="create_ro_with_open_repair"
+                            context="{'open_repair': True}"
+                            class="btn-primary"/>
+                    <button name="create_repair_order"
+                            string="Create Repair Order"
+                            type="object"
+                            id="create_ro_without_open_repair"
+                            class="btn-primary"/>
+                    <button string="Cancel"
+                            class="btn-secondary"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_view_repair_order_creation" model="ir.actions.act_window">
+        <field name="name">Create RO and Add SR</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">repair.order.creation.wiz</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="fleet_kanban_services_base.view_repair_order_creation_wiz"/>
+        <field name="binding_model_id" ref="fleet_kanban_services_base.model_vehicle_services"/>
+    </record>
+
+    <record id="action_view_repair_order_existing" model="ir.actions.act_window">
+        <field name="name">Add SR to existing RO</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">repair.order.creation.wiz</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="fleet_kanban_services_base.view_repair_order_existing_wiz"/>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="fleet_kanban_services_base.model_vehicle_services"/>
+    </record>
+</odoo>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <record id="fleet_vehicle_status_crash_test" model="fleet.vehicle.status">
+        <field name="name">Crash Test</field>
+    </record>
+
+    <record id="fleet_vehicle_status_envelope_expansion" model="fleet.vehicle.status">
+        <field name="name">Envelope Expansion</field>
+    </record>
+
+    <record id="fleet_vehicle_status_operations" model="fleet.vehicle.status">
+        <field name="name">Operations</field>
+    </record>
+
+    <record id="fleet_vehicle_status_rnd" model="fleet.vehicle.status">
+        <field name="name">R&amp;D</field>
+    </record>
+
+    <record id="fleet_vehicle_status_release_test" model="fleet.vehicle.status">
+        <field name="name">Release Test</field>
+    </record>
+</odoo>

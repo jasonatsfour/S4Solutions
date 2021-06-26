@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="fleet_kanban_services_base.repair_order_list_modal">
+        <div class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title">
+                            <span>Select repair order to add service request.</span>
+                        </h2>
+                        <button title="Close" type="button" class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <section>
+                            <div class="form-group radio-container input-required">
+                                <table class="table table-condensed" id="mytable">
+                                    <!-- <thead > -->
+                                    <tr>
+                                            <th>Reference</th>
+                                        <th class="text-center">Vehicle Brand</th>
+                                        <th class="text-center">Vehicle Model</th>
+                                        <th>Responsible</th>
+                                        </tr>
+                                    <!-- </thead> -->
+                                    <tbody id="repair_order_rec"></tbody>
+                                </table>
+                                <small class="text-danger form-control-warning">
+                                    <span>Please select an Product</span>
+                                </small>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="vehicle_service_add" class="btn btn-primary">Add</button>
+                        <button type="button" class="btn btn-default" data-action="discard"
+                                data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="fleet_kanban_services_base.VehicleIsGroundedStateModal">
+        <div class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title">Alert</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-warning">Choosing "critical" priority will ground this Vehicle. Do you wish to proceed ? Or change the priority.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="is_grounded_yes" class="btn btn-primary">Yes</button>
+                        <button type="button" id="is_grounded_cancel" class="btn btn-primary">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

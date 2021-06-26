@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="recurring_service_plan_view_search" model="ir.ui.view">
+        <field name="name">recurring.service.plan.search</field>
+        <field name="model">recurring.service.plan</field>
+        <field name="arch" type="xml">
+            <search string="Recurring Service Plan">
+                <field name="apply_vehicle_matching"/>
+                <field name="vehicle_ids"/>
+                <filter name="make_value" string="Make Value"
+                        domain="[('apply_vehicle_matching', '=', 'make_value')]"/>
+                <filter name="model_value" string="Model Value"
+                        domain="[('apply_vehicle_matching', '=', 'model_value')]"/>
+                <filter name="display_1" string="Display 1"
+                        domain="[('display_1', '=', True)]"/>
+                <filter name="display_2" string="Display 2"
+                        domain="[('display_2', '=', True)]"/>
+                <group expand="0">
+                    <filter string="Apply To Vehicle Matching"
+                            name="group_by_apply_vehicle_matching"
+                            context="{'group_by': 'apply_vehicle_matching'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="recurring_service_plan_view_tree" model="ir.ui.view">
+        <field name="name">recurring.service.plan.tree</field>
+        <field name="model">recurring.service.plan</field>
+        <field name="arch" type="xml">
+            <tree string="Recurring Service Plans">
+                <field name="name"/>
+                <field name="interval_type"/>
+                <field name="apply_vehicle_matching"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="recurring_service_plan_view_form" model="ir.ui.view">
+        <field name="name">recurring.service.plan.form</field>
+        <field name="model">recurring.service.plan</field>
+        <field name="arch" type="xml">
+            <form string="Recurring Service Plans">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group cols="4">
+                            <field name="interval_type"/>
+                            <field name="apply_vehicle_matching"/>
+                            <field name="make_value_id"
+                                   attrs="{'invisible':[('apply_vehicle_matching','!=','make_value')],'required': [('apply_vehicle_matching','=','make_value')]}"
+                                   string=""/>
+                            <field name="model_value_id"
+                                   attrs="{'invisible':[('apply_vehicle_matching','!=','model_value')],'required': [('apply_vehicle_matching','=','model_value')]}"
+                                   string=""/>
+                        </group>
+                        <group cols="4">
+                            <field name="interval_threshold"/>
+                            <field name="interval_hours"
+                                   string="Interval Hours"
+                                   attrs="{'invisible': [('interval_type', '!=', 'vehicle_flight_hours')]}"/>
+                            <field name="interval_hours"
+                                   string="Interval Days"
+                                   attrs="{'invisible': [('interval_type', '!=', 'vehicle_flight_et')]}"/>
+                            <field name="services_request_template_id"/>
+                            <field name="parent_recurring_service_plan_id"
+                                   domain="[('id', '!=', id), ('interval_type', '=', interval_type)]"/>
+                            <field name="display_1"/>
+                            <field name="display_2"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="recurring_plan_vehicle_ids" string="Applicable Vehicles"
+                              attrs="{'invisible':[('apply_vehicle_matching', 'in', ['make_value','model_value'])]}">
+                            <field name="vehicle_ids"/>
+                        </page>
+                        <page name="sub_recurring_plans" string="Sub Recurring Plan">
+                            <field name="child_plan_ids" readonly="True"/>
+                        </page>
+                        <page name="recurring_plan_service_history" string="Vehicle Recurring Service History">
+                            <field name="vehicle_recurring_service_history_ids"
+                                   readonly="True" options="{'no_create_edit': True}">
+                                <tree create="false" delete="false">
+                                    <field name="vehicle_id"/>
+                                    <field name="last_generated_hours"/>
+                                    <field name="hours_till_next_generation"/>
+                                    <field name="hours_till_next_generation_without_threshold"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id='action_recurring_service_plan' model='ir.actions.act_window'>
+        <field name="name">Recurring Service Plans</field>
+        <field name="res_model">recurring.service.plan</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a new Recurring Service Plan.
+            </p>
+        </field>
+    </record>
+</odoo>

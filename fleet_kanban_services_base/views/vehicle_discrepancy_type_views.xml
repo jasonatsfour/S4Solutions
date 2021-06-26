@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="vehicle_discrepancy_type_tree_view" model="ir.ui.view">
+        <field name="name">vehicle.discrepancy.type.tree</field>
+        <field name="model">vehicle.discrepancy.type</field>
+        <field name="arch" type="xml">
+            <tree string="Vehicle Discrepancy Type">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="vehicle_discrepancy_type_form_view" model="ir.ui.view">
+        <field name="name">vehicle.discrepancy.type.form</field>
+        <field name="model">vehicle.discrepancy.type</field>
+        <field name="arch" type="xml">
+            <form string="Vehicle Discrepancy Type">
+                <sheet>
+                    <group>
+                        <group cols="4">
+                            <field name="name" required="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id='action_vehicle_discrepancy_type' model='ir.actions.act_window'>
+        <field name="name">Vehicle Discrepancy Type</field>
+        <field name="res_model">vehicle.discrepancy.type</field>
+        <field name="view_mode">tree,kanban,form,graph</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a new vehicle discrepancy type.
+            </p>
+        </field>
+    </record>
+</odoo>

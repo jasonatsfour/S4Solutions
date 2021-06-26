@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tracebility rename in MO -->
+    <record id="mrp_production_form_view_inherit_as_built_report_base" model="ir.ui.view">
+        <field name="name">mrp.production.form.inherit_as_built_report_base</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='%(stock.action_stock_report)d']" position="attributes">
+                <attribute name="string">As-Built Traceability</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

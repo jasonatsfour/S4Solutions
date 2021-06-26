@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="stock_production_lot_status_form">
+        <field name="name">stock_production_lot_status.form</field>
+        <field name="model">stock.production.lot.status</field>
+        <field name="arch" type="xml">
+            <form string="Stock Production Lot Status">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="key"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model='ir.ui.view' id='stock_production_lot_status'>
+        <field name='name'>stock_production_lot_status.tree</field>
+        <field name='model'>stock.production.lot.status</field>
+        <field name='arch' type='xml'>
+            <tree>
+                <field name='name'/>
+                <field name='key'/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_stock_production_lot_status" model="ir.actions.act_window">
+        <field name="name">Stock Production Lot Status</field>
+        <field name="res_model">stock.production.lot.status</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="stock_production_lot_status_menu"
+              name="Stock Production Lot Status"
+              parent="stock.menu_stock_inventory_control"
+              action="action_stock_production_lot_status"
+              sequence="105"/>
+</odoo>

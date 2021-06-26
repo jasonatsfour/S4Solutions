@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" name="manufacture_traceability assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <!-- JS -->
+            <script type="text/javascript" src="/as_built_report_base/static/src/js/as_built_buttons.js"></script>
+            <script type="text/javascript" src="/as_built_report_base/static/src/js/autofold.js"></script>
+            <script type="text/javascript" src="/as_built_report_base/static/src/js/traceability_report.js"></script>
+            <link rel="stylesheet" type="text/css" href="/as_built_report_base/static/src/css/as_built.css"/>
+        </xpath>
+    </template>
+</odoo>

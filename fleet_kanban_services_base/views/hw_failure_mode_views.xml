@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="hw_failure_view_tree" model="ir.ui.view">
+        <field name="name">hw.failure.mode.tree</field>
+        <field name="model">hw.failure.mode</field>
+        <field name="arch" type="xml">
+            <tree string="Hw Failure Mode">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hw_failure_view_form" model="ir.ui.view">
+        <field name="name">hw.failure.mode.form</field>
+        <field name="model">hw.failure.mode</field>
+        <field name="arch" type="xml">
+            <form string="Hw Failure Mode">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
+                            attrs="{'invisible': [('active', '=', True)]}"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                    </group>
+                    <separator string="Description"/>
+                    <field name="note" nolabel="1"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id='action_hw_failure_mode' model='ir.actions.act_window'>
+        <field name="name">Hw Failure Mode</field>
+        <field name="res_model">hw.failure.mode</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a new Hw Failure Mode.
+            </p>
+        </field>
+    </record>
+</odoo>

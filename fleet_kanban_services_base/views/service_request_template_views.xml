@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="service_request_template_search_view" model="ir.ui.view">
+        <field name="name">service.request.template.search.view</field>
+        <field name="model">service.request.template</field>
+        <field name="arch" type="xml">
+            <search string="Search Request Template">
+                <field name="title"/>
+                <field name="type_id"/>
+                <field name="tag_ids"/>
+                <filter name="grounding" string="Grounded"
+                        domain="[('priority', '=', 'critical')]"/>
+                <filter name="non_grounding" string="Non-Grounded"
+                        domain="[('priority', '=', 'non-critical')]"/>
+                <group expand="0">
+                    <filter string="Service Type" name="service_type" context="{'group_by': 'type_id'}"/>
+<!--                    <filter string="Service Tags" name="service_tags" context="{'group_by': 'tag_ids'}"/>-->
+                    <filter string="Grounding Status" name="grounding_status" context="{'group_by': 'priority'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="service_request_template_tree_view" model="ir.ui.view">
+        <field name="name">service.request.template.tree</field>
+        <field name="model">service.request.template</field>
+        <field name="arch" type="xml">
+            <tree string="Service Request">
+                <field name="name"/>
+                <field name="description"/>
+                <field name="priority"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="service_request_template_form_view" model="ir.ui.view">
+        <field name="name">service.request.template.form</field>
+        <field name="model">service.request.template</field>
+        <field name="arch" type="xml">
+            <form string="Service Request">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" required="1"/>
+                        </h1>
+                        <label for="title" class="oe_edit_only"/>
+                        <h1>
+                            <field name="title" required="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group cols="4">
+                            <field name="priority" readonly="0" required="1"/>
+                            <label for="critical_selection"
+                                   string="Choosing Critical priority will ground this Vehicle. Do you wish to proceed ?"
+                                   style="color: red"
+                                   attrs="{'invisible':[('priority','!=','critical')]}"/>
+                            <div>
+                                <div>
+                                    <field name="critical_selection"
+                                           attrs="{'invisible':[('priority','!=','critical')],'required': [('priority','=','critical')]}"/>
+                                </div>
+                            </div>
+                        </group>
+                        <group cols="4">
+                            <field name="type_id"/>
+                            <field name="tag_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <group string="Description">
+                        <field nolabel="1" name="description"
+                               placeholder="Write here any other information related to the vehicle service."/>
+                    </group>
+                    <group string="Images">
+                        <field name="images_ids" nolabel="1" widget="many2many_binary"/>
+                    </group>
+                    <notebook>
+                        <page string="Tasks" name="sr_template_included_services">
+                            <field name="included_services_ids" string="Tasks" nolabel="1">
+                                <tree string="Tasks" editable="bottom">
+                                    <field name="cost_subtype_id"
+                                           required="1"
+                                           string="Task"
+                                           domain="[('category','=','service')]"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Parts" name="sr_template_parts">
+                            <field name="operations">
+                                <form string="Operations">
+                                    <notebook>
+                                        <page string="Repair Line" name="srt_repair_lines">
+                                            <group>
+                                                <group>
+                                                    <field name="product_id"/>
+                                                    <field name="name"/>
+                                                    <field name='stage' invisible="1"/>
+                                                    <label for="product_uom_qty"/>
+                                                    <div class="o_row">
+                                                        <field name="product_uom_qty"/>
+                                                        <field name="product_uom" groups="uom.group_uom"/>
+                                                    </div>
+                                                    <field name='fleet_use' invisible="1"/>
+                                                    <field name="lot_id" domain="[('product_id', '=', product_id)]"
+                                                           context="{'default_product_id': product_id}"
+                                                           groups="stock.group_production_lot"/>
+                                                    <field name="type" invisible="1"/>
+                                                    <field name="price_unit"/>
+                                                    <field name="tax_id" widget="many2many_tags"
+                                                           domain="[('type_tax_use','=','sale')]"/>
+                                                    <field name="invoiced" invisible="1"/>
+                                                    <field name="price_subtotal" widget="monetary" invisible="1"/>
+                                                </group>
+                                                <group groups="stock.group_stock_multi_locations">
+                                                    <field name="location_id"/>
+                                                    <field name="location_dest_id"/>
+                                                </group>
+                                            </group>
+                                        </page>
+                                    </notebook>
+                                </form>
+                                <tree string="Operations" editable="bottom">
+                                    <field name="type"/>
+                                    <field name="product_id"/>
+                                    <field name='name'/>
+                                    <field name='stage'/>
+                                    <field name='fleet_use' invisible="1"/>
+                                    <field name="lot_id"
+                                           domain="[('product_id', '=', product_id)]"
+                                           context="{'default_product_id': product_id}"
+                                           groups="stock.group_production_lot"
+                                           attrs="{'readonly': [('fleet_use', '!=', True)]}"
+                                           invisible="1"/>
+                                    <field name="location_id" groups="stock.group_stock_multi_locations"/>
+                                    <field name="location_dest_id" groups="stock.group_stock_multi_locations"/>
+                                    <field name="product_uom_qty" string="Quantity"/>
+                                    <field name="product_uom" string="Unit of Measure" groups="uom.group_uom"/>
+                                    <field name="price_unit" invisible="1"/>
+                                    <field name="tax_id"
+                                           widget="many2many_tags"
+                                           domain="[('type_tax_use','=','sale')]"/>
+                                    <field name="price_subtotal"
+                                           widget="monetary"
+                                           invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id='action_service_request_template' model='ir.actions.act_window'>
+        <field name="name">Service Request Template</field>
+        <field name="res_model">service.request.template</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a Service Request Template.
+            </p>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,4 @@
+<?xml version="1.0" ?>
+<odoo noupdate="1">
+    <function model="fleet.vehicle" name="deactivate_base_record_rule"/>
+</odoo>

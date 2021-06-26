@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Kanban Action-->
+    <record id="action_fleet_services_kanban_scan" model="ir.actions.client">
+        <field name="name">Discrepancy</field>
+        <field name="tag">fleet_services_kanban</field>
+    </record>
+
+    <menuitem id="menu_kanban_scan_root"
+              name="Discrepancy"
+              sequence="11"/>
+
+    <!-- Scan Vehicle Number -->
+    <menuitem id="menu_fleet_services_kanban_scan"
+              name="Scan Vehicle"
+              parent="menu_kanban_scan_root"
+              action="action_fleet_services_kanban_scan"
+              sequence="9"/>
+
+    <!-- Discrepancy Menu -->
+    <menuitem id="menu_vehicle_discrepancy"
+              name="Discrepancy"
+              parent="fleet.fleet_vehicles"
+              action="action_vehicle_discrepancy"
+              sequence="10"/>
+
+    <!-- Services Request Menu -->
+    <menuitem id="menu_vehicle_serives_root"
+              name="Service Request"
+              parent="fleet.menu_root"
+              sequence="3"/>
+
+    <menuitem id="menu_vehicle_services"
+              name="Service Requests"
+              parent="menu_vehicle_serives_root"
+              action="action_vehicle_services"
+              sequence="1"/>
+
+    <!-- Vehicle Flight Log Menu -->
+    <menuitem id="menu_vehicle_flight_log"
+              name="Vehicle Flight Log"
+              parent="fleet.fleet_vehicles"
+              action="action_vehicle_flight_log"
+              sequence="12"/>
+
+    <menuitem id="menu_discrepancy_configuration"
+              name="Discrepancy"
+              parent="fleet.fleet_configuration"
+              sequence="113"/>
+
+    <!-- Discrepancy State Menu -->
+    <menuitem id="menu_vehicle_discrepancy_state"
+              name="Discrepancy State"
+              parent="menu_discrepancy_configuration"
+              action="action_vehicle_discrepancy_state"
+              sequence="1"/>
+
+    <!-- Discrepancy Type Menu -->
+    <menuitem id="menu_vehicle_discrepancy_type"
+              name="Discrepancy Type"
+              parent="menu_discrepancy_configuration"
+              action="action_vehicle_discrepancy_type"
+              sequence="2"/>
+
+    <!-- Vehicle Status Menu -->
+    <menuitem id="menu_vehicle_status"
+              name="Vehicle Status"
+              parent="menu_discrepancy_configuration"
+              action="action_vehicle_status"
+              sequence="3"/>
+
+    <!-- Service State Menu -->
+    <menuitem id="menu_service_configuration"
+              name="Service Request"
+              parent="fleet.fleet_configuration"
+              sequence="114"/>
+
+    <!-- Service State -->
+    <menuitem id="menu_vehicle_service_state"
+              name="Service Stages"
+              parent="menu_service_configuration"
+              action="action_vehicle_service_state"
+              sequence="1"/>
+
+    <!-- Service Tag -->
+    <menuitem id="menu_vehicle_service_tag"
+              name="Service Tags"
+              parent="menu_service_configuration"
+              action="vehicle_service_tag_action"
+              sequence="2"/>
+
+    <!-- Service Type -->
+    <menuitem id="menu_vehicle_service_type"
+              name="Service Types"
+              parent="menu_service_configuration"
+              action="vehicle_service_type_action_form"
+              sequence="3"/>
+
+    <!-- Repair Order Menu -->
+    <menuitem id="menu_repair_order_root"
+              name="Repair Order"
+              parent="fleet.menu_root"
+              sequence="4"/>
+
+    <menuitem id="menu_repair_order"
+              name="Repair Orders"
+              parent="menu_repair_order_root"
+              sequence="1"
+              action="fleet_repair_action_main"/>
+
+    <!-- Services Performed Menu -->
+    <menuitem id="menu_services_performed"
+              name="Services Performed"
+              parent="fleet.menu_fleet_reporting"
+              sequence="3"
+              action="fleet_vehicle_cost_action_main"/>
+
+    <!-- Vehicle Availability Configuration -->
+    <menuitem id="menu_fleet_vehicle_available"
+              name="Vehicle Availability"
+              parent="fleet.fleet_configuration"
+              sequence="112"
+              action="fleet_kanban_services_base.fleet_vehicle_available_action"/>
+
+    <!-- Vehicle Location Configuration -->
+    <menuitem id="menu_fleet_vehicle_location"
+              name="Vehicle Location"
+              parent="fleet.fleet_configuration"
+              sequence="113"
+              action="fleet_kanban_services_base.fleet_vehicle_location_action"/>
+
+    <!-- Repair Order Configuration -->
+    <menuitem id="menu_repair_order_configuration"
+              name="Repair Order"
+              parent="fleet.fleet_configuration"
+              sequence="115"/>
+
+    <!-- Repair Stage -->
+    <menuitem id="menu_fleet_repair_stage"
+              name="Repair Stages"
+              action="fleet_repair_stage_action"
+              parent="menu_repair_order_configuration"
+              sequence="1"/>
+
+    <!-- Repair Type -->
+    <menuitem id="menu_fleet_repair_type_types"
+              name="Repair Types"
+              action="fleet_repair_type_action_form"
+              parent="menu_repair_order_configuration"
+              sequence="2"/>
+
+    <!-- Repair Tags -->
+    <menuitem id="menu_fleet_repair_eco_tag"
+              name="Repair Tags"
+              action="fleet_repair_tag_action"
+              parent="menu_repair_order_configuration"
+              sequence="3"/>
+
+    <!-- Recurring Service Plan -->
+    <menuitem id="menu_recurring_service_plan_child"
+              name="Recurring Service Plans"
+              parent="menu_vehicle_serives_root"
+              action="action_recurring_service_plan"
+              sequence="2"/>
+
+    <!-- Service Request Template -->
+    <menuitem id="menu_recurring_service_plan_child_service_template"
+              name="Service Request Template"
+              parent="menu_vehicle_serives_root"
+              action="action_service_request_template"
+              sequence="3"/>
+
+    <!-- Observed During -->
+    <menuitem id="menu_observed_during"
+              name="Observed During"
+              parent="menu_discrepancy_configuration"
+              action="action_observed_during"
+              sequence="4"/>
+
+    <!-- Hw Failure Mode -->
+    <menuitem id="menu_action_hw_failure_mode"
+              name="Hw Failure Mode"
+              parent="menu_discrepancy_configuration"
+              action="action_hw_failure_mode"
+              sequence="5"/>
+
+    <!-- Change menu name Car Manufacturer to Vehicle Make -->
+    <record id='fleet.fleet_vehicle_model_brand_action' model='ir.actions.act_window'>
+        <field name="name">Vehicle Make</field>
+    </record>
+
+    <menuitem id="fleet.fleet_vehicle_model_brand_menu"
+              name="Vehicle Make"
+              parent="fleet.fleet_configuration"
+              action="fleet.fleet_vehicle_model_brand_action"/>
+
+    <!-- Change menu name Car Manufacturer to Vehicle Make -->
+    <!-- Change menu name Vehicle Models to Vehicle Model and moved under configuration menu -->
+    <menuitem id="fleet.fleet_vehicle_model_menu"
+              name="Vehicle Model"
+              parent="fleet.fleet_configuration"
+              action="fleet.fleet_vehicle_model_action"/>
+
+    <!-- Hide menu Cost and Indicative Costs from Reporting menu-->
+    <record id="make_invisible" model="res.groups">
+        <field name="name">Invisible</field>
+    </record>
+
+    <record model="ir.ui.menu" id="fleet.menu_fleet_reporting_costs">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+
+    <record model="ir.ui.menu" id="fleet.menu_fleet_reporting_indicative_costs">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+
+    <record model="ir.ui.menu" id="fleet.fleet_vehicle_contract_types_menu">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+</odoo>

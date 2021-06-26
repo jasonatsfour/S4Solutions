@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="vehicle_services_form_view_inherit_fleet_traceability_base" model="ir.ui.view">
+        <field name="name">vehicle.services.form.inherit_fleet_traceability_base</field>
+        <field name="model">vehicle.services</field>
+        <field name="inherit_id" ref="fleet_kanban_services_base.vehicle_services_form_view"/>
+        <field name="arch" type="xml">
+            <field name="vehicle_id" position="after">
+                <field name="product_id"
+                       attrs="{'readonly': [('is_draft', '=', False)]}"/>
+                <field name="lot_id"
+                       domain="[('product_id', '=', product_id)]"
+                       attrs="{'readonly': [('is_draft', '=', False)]}"/>
+            </field>
+            <field name="vehicle_id" position="attributes">
+                <attribute name="context">{'product_id': product_id, 'lot_id': lot_id}</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="vehicle_services_view_search_for_product" model="ir.ui.view">
+        <field name="name">vehicle.services.search.for.product</field>
+        <field name="model">vehicle.services</field>
+        <field name="inherit_id" ref="fleet_kanban_services_base.vehicle_services_search_view"/>
+        <field name="arch" type="xml">
+            <field name="vehicle_number" position="after">
+                <field name="product_id"/>
+                <field name="lot_id"/>
+            </field>
+            <xpath expr="//group" position="inside">
+                <filter string="Product" name="product" context="{'group_by': 'product_id'}"/>
+                <filter string="Lot" name="lot" context="{'group_by': 'lot_id'}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

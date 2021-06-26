@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="fleet_repair_tag_view_search" model="ir.ui.view">
+        <field name="name">fleet.repair.tag.view.search</field>
+        <field name="model">fleet.repair.tag</field>
+        <field name="arch" type="xml">
+            <search string="Fleet Repair Tags">
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="fleet_repair_tag_view_tree" model="ir.ui.view">
+        <field name="name">fleet.repair.tag.view.tree</field>
+        <field name="model">fleet.repair.tag</field>
+        <field name="arch" type="xml">
+            <tree string="Tags" editable="bottom">
+                <field name="name" required="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="fleet_repair_tag_action" model="ir.actions.act_window">
+        <field name="name">Repair Tags</field>
+        <field name="res_model">fleet.repair.tag</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a new tag.
+            </p>
+        </field>
+    </record>
+</odoo>

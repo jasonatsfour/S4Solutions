@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_warehouse_form_inherit_fleet_kanban_services_base" model="ir.ui.view">
+        <field name="name">stock.warehouse.form.inherit_fleet_kanban_services_base</field>
+        <field name="model">stock.warehouse</field>
+        <field name="inherit_id" ref="stock.view_warehouse"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[2]" position="after">
+                <page string="Inventory Locations" name="inventory_loc" default_focus="1">
+                    <group>
+                        <group>
+                            <field name="add_source_location"/>
+                            <field name="add_destination_location"/>
+                        </group>
+                        <group>
+                            <field name="remove_source_location"/>
+                            <field name="remove_destination_location"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
