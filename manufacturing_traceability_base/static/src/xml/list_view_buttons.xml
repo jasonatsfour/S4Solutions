@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-extend="ListView.buttons">
+        <t t-jquery="div.o_list_buttons" t-operation="append">
+                <button t-if="widget.need_to_create_wo" groups="mrp.group_mrp_manager"
+                    class="btn btn-primary o_button_create_wo_based_on_selected_operation">
+                Append
+            </button>
+        </t>
+    </t>
+</templates>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="list_buttons_added_for_work_orders" name="list.buttons.work.orders"
+                  inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" type="text/scss"
+                      href="/manufacturing_traceability_base/static/src/css/tablet_view.css"/>
+                <script type="text/javascript"
+                        src="/manufacturing_traceability_base/static/src/js/mrp_workorder.js"/>
+                <script type="text/javascript"
+                        src="/manufacturing_traceability_base/static/src/js/list_controllers.js"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>

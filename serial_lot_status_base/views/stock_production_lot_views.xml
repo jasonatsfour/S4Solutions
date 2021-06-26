@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_production_lot_form_inherit_serial_lot_status_base" model="ir.ui.view">
+        <field name="name">stock.production.lot.form.inherit_serial_lot_status_base</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_form"/>
+        <field name="arch" type="xml">
+            <field name="company_id" position="after">
+                <field name="lot_ids" widget="many2many_tags" readonly="1"/>
+                <field name="stock_production_lot_status_id" widget="selection"/>
+                <field name="is_none_production"/>
+            </field>
+        </field>
+    </record>
+    <record id="view_production_lot_tree_inherit_serial_lot_status_base" model="ir.ui.view">
+        <field name="name">stock.production.lot.tree.inherit_serial_lot_status_base</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_tree"/>
+        <field name="arch" type="xml">
+            <field name="company_id" position="after">
+                <field name="stock_production_lot_status_id" widget="selection"/>
+            </field>
+        </field>
+    </record>
+</odoo>

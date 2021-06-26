@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="message_wizard_for_workorder" model="ir.ui.view">
+        <field name="name">message.wizard.for.workorder</field>
+        <field name="model">message.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Confirmation">
+                <sheet>
+                    <field name="name" no_label="1" readonly="1" style="font-size: 20px;"/>
+                    <field name="workorder_id" invisible="1"/>
+                    <field name="workorder_ids" invisible="1"/>
+                    <field name="condition_name" invisible="1"/>
+                </sheet>
+                <footer>
+                    <button name="confirm" string="Confirm" role="button" type="object" class="btn-primary"/>
+                    <button name="cancel" special="cancel" string="Cancel" role="button" class="btn-default"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="advance_failure_popup_for_workorder" model="ir.ui.view">
+        <field name="name">advance.failure.popup.for.workorder</field>
+        <field name="model">advance.failure.popup.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Failure Popup">
+                <sheet>
+                    <field name="workorder_id" invisible="1"/>
+                    <field name="production_id" invisible="1"/>
+                    <div class="row workorder_menu">
+                        <button style="font-family: ui-monospace;" name="button_re_test" type="object"
+                                string="Re-Test" class="btn-success"/><br/>
+                        <button style="font-family: ui-monospace;" name="button_continue_with_failure" type="object"
+                                string="Continue with Failure" class="btn-warning"/><br/>
+                        <button style="font-family: ui-monospace;" name="button_remove_assembly" type="object"
+                                string="Remove Assembly"
+                                class="btn-danger"/><br/>
+                    </div>
+                </sheet>
+                <footer/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_advance_failure_popup_wizard" model="ir.actions.act_window">
+        <field name="name">Quality check failed</field>
+        <field name="res_model">advance.failure.popup.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

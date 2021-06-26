@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_stock_move_line_detailed_operation_tree_inherit_manufacturing_traceability_base"
+            model="ir.ui.view">
+        <field name="name">stock.move.line.operations.tree</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_stock_move_line_detailed_operation_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='lot_id']" position="replace">
+                <field name="lot_id" groups="stock.group_production_lot"
+                       attrs="{'column_invisible': [('parent.show_lots_text', '=', True)]}"
+                       context="{'default_product_id': product_id, 'default_company_id': company_id}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_stock_move_lots_inherited_view" model="ir.ui.view">
+        <field name="name">stock.move.inherited.lot.tree</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="mrp.view_stock_move_lots"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_id']" position="after">
+                <field name="needs_lots"/>
+            </xpath>
+            <xpath expr="//field[@name='move_line_ids']/tree/field[@name='lot_id']" position="replace">
+                <field name="lot_id"
+                       groups="stock.group_production_lot"
+                       domain="[('is_none_production', '=', False)]"
+                       attrs="{'column_invisible': [('parent.needs_lots', '=', False)]}"
+                       context="{'default_product_id': product_id, 'default_company_id': company_id}"/>
+            </xpath>
+        </field>
+    </record>
+
+     <record id="view_stock_move_raw_tree_inherited_view" model="ir.ui.view">
+        <field name="name">stock.move.raw.inherited.tree</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="mrp.view_stock_move_raw_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="editable">bottom</attribute>
+            </xpath>
+            <xpath expr="//field[@name='operation_id']" position="replace">
+                <field name="workorder_id" invisible="1" />
+                <field name="raw_material_production_id" />
+                <field name="externally_added_component" optional="hide"/>
+                <field name="workorder_state" invisible="1"/>
+                <field name="operation_id" invisible="0" options="{'no_quick_create':True,'no_create_edit':True}"
+                context="{'routing_id':parent.routing_id, 'workorder_id': workorder_id, 'production_id':raw_material_production_id,
+                'operation_id': operation_id}"
+                attrs="{'readonly': [('workorder_id','!=', False),('workorder_state', 'not in', ['pending', 'ready'])]}"
+                />
+            </xpath>
+            <xpath expr="//field[@name='product_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('parent.state', 'in', ['to_close', 'done', 'cancel'])]}</attribute>
+                <attribute name="force_save">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='product_uom']" position="attributes">
+                <attribute name="attrs">{'readonly': [('parent.state', 'not in', ['draft', 'confirmed'])]}</attribute>
+                <attribute name="force_save">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='product_uom_qty']" position="attributes">
+                <attribute name="attrs">{'readonly': [('parent.state', 'in', ['to_close', 'done', 'cancel'])]}</attribute>
+                <attribute name="force_save">1</attribute>
+            </xpath>
+            <xpath expr="//field[last()]" position="after">
+                <button type="object" name="button_delete_operation"  class="fa fa-trash-o move_delete_button"
+                        aria-label="Delete" title="Delete"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

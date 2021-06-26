@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <record id="lot_available" model="stock.production.lot.status">
+        <field name="name">Available</field>
+        <field name="key">available</field>
+    </record>
+
+    <record id="lot_inventory" model="stock.production.lot.status">
+        <field name="name">Inventory</field>
+        <field name="key">inventory</field>
+    </record>
+
+    <record id="lot_installed" model="stock.production.lot.status">
+        <field name="name">Installed</field>
+        <field name="key">installed</field>
+    </record>
+
+    <record id="lot_scrapped" model="stock.production.lot.status">
+        <field name="name">Scrapped</field>
+        <field name="key">scrapped</field>
+    </record>
+</odoo>

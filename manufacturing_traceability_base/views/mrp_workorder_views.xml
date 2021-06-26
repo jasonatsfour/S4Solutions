@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="mrp_production_workorder_form_view_inherit_inherit_manufacturing_traceability_base"
+            model="ir.ui.view">
+        <field name="name">mrp.production.work.order.form.inherit_manufacturing_traceability_base</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp.mrp_production_workorder_form_view_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page//field[@name='check_ids']//tree" position="after">
+                <form string="Edit Open Checks" name="form_checks">
+                    <header>
+                        <field name="quality_state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="product_id"/>
+                                <field name="workorder_id" invisible="1"/>
+                                <field name="operation_id"/>
+                                <field name="picking_type_id"/>
+                                <field name="test_type" invisible="1"/>
+                                <field name="measure" attrs="{'invisible': [('test_type', '!=', 'measure')]}"/>
+                                <field name="alert_ids" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="test_type_id" string="Type"/>
+                                <field name="control_date" invisible="1"/>
+                                <field name="team_id"/>
+                                <field name="user_id"  string="Control Person"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="user_id" invisible="1"/>
+                                 <field name="code" invisible="1"/>
+                                 <field name="operation_id" invisible="1"/>
+                                <field name="worksheet" widget="radio" attrs="{'invisible': ['|', ('code', '!=', 'mrp_operation'), ('operation_id', '=', False)]}"/>
+                                <field name="worksheet_page" attrs="{'invisible': ['|', '|', ('code', '!=', 'mrp_operation'),
+                                 ('operation_id', '=', False), ('worksheet', '!=', 'scroll')]}"/>
+                            </group>
+                        </group>
+                        <group attrs="{'invisible': [('test_type', '!=', 'picture')]}">
+                            <field name="picture" widget="image" attrs="{'required': [('test_type', '=', 'picture')]}"/>
+                        </group>
+                        <notebook>
+                            <page string="Instructions" name="instructions">
+                                <field name="note" placeholder="Describe the quality check to do..."/>
+                            </page>
+                            <page string="Message If Failure" attrs="{'invisible':
+                            [('test_type', 'in', ['picture', 'text', 'register_consumed_materials', 'print_label'])]}">
+                                <field name="failure_message"/>
+                            </page>
+                            <page string="Notes" name="Notes">
+                                <field name="reason" string="Note" placeholder="Describe why you need to perform this quality check..."/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </xpath>
+            <xpath expr="//field[@name='raw_workorder_line_ids']/tree/field[@name='product_id']" position="after">
+                <field name="product_tracking" readonly="1"/>
+                <field name="partial_serialization_type" readonly="1"/>
+                <field name="partial_serialization_id" readonly="1"/>
+            </xpath>
+            <xpath expr="//field[@name='raw_workorder_line_ids']/tree/field[@name='lot_id']" position="attributes">
+				<attribute name="attrs">{
+					'readonly': [('product_tracking', '=', 'none'), ('partial_serialization_id', '=', False)]
+					}
+				</attribute>
+			</xpath>
+			<xpath expr="//notebook//field[@name='check_ids']" position="after">
+				<field name="picking_type_id"  invisible="1"/>
+				<field name="operation_id" invisible="1"/>
+				<field name="operation_edit_allowed" invisible="1"/>
+			</xpath>
+            <xpath expr="//notebook//field[@name='check_ids']//tree//field[@name='control_date']" position="before">
+                <field name="operation_edit_allowed" invisible="1"/>
+                <field name="sequence" widget="handle" attrs="{'readonly': [('quality_state', '!=', 'none')],
+                'invisible': ['|', ('quality_state', '!=', 'none'), ('operation_edit_allowed' ,'=', False)]}"/>
+            </xpath>
+			<xpath expr="//notebook//field[@name='check_ids']" position="attributes">
+                <attribute name="readonly">0</attribute>
+				<attribute name="attrs">{'readonly': [('operation_edit_allowed', '=', False)]}</attribute>
+				<attribute name="context">{'from_workorder': True,
+					'default_product_id': product_id,
+					}
+				</attribute>
+            </xpath>
+        </field>
+    </record>
+
+	<!-- MRP WORKORDER LIST VIEW-->
+	<record id="mrp_production_workorder_tree_view_inherit_manufacturing_traceability_base" model="ir.ui.view">
+        <field name="name">mrp.workorder.view.form.inherit.manufacturing.traceability.base</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp.mrp_production_workorder_tree_view_inherit"/>
+        <field name="arch" type="xml">
+            <field name="name" position="before">
+                <field name="operation_edit_allowed" invisible="1"/>
+                <field name="sequence" widget="handle"
+                       groups="mrp.group_mrp_manager"
+                       invisible="not context.get('operation_edit_allowed', False)"
+                       attrs="{'invisible': [('operation_edit_allowed', '=', False)]}"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="mrp_workorder_view_inherited_form_tablet_inherited_statuses_heaviside" model="ir.ui.view">
+        <field name="name">mrp.workorder.view.inherit.form.tablet.inherited.statuses.heaviside</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp_workorder.mrp_workorder_view_form_tablet"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('o_workorder_lot')]/field[@name='lot_id']" position="attributes">
+                <attribute name="domain">[
+                    ('is_none_production', '=', False),
+                    ('product_id', '=', component_id),
+                    ('stock_production_lot_status_id.key', 'in', ['available', 'inventory']),
+                    '|', ('company_id', '=', False), ('company_id', '=', company_id)
+                    ]
+                </attribute>
+            </xpath>
+            <xpath expr="//div[hasclass('o_workorder_lot')]/field[@name='lot_id']" position="after">
+                <button name="action_generate_serial_for_component" type="object"
+                        class="btn btn-secondary fa fa-plus-square-o"
+                        aria-label="Creates a new serial/lot number"
+                        title="Creates a new serial/lot number"
+                        role="img" attrs="{'invisible': [('lot_id', '!=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="mrp_workorder_view_inherited_form_tablet_inherited_for_split_mo" model="ir.ui.view">
+        <field name="name">mrp.workorder.view.inherit.form.tablet.inherited.for.split.mo</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp_workorder.mrp_workorder_view_form_tablet_menu"/>
+        <field name="arch" type="xml">
+            <xpath expr="//footer" position="before">
+                <field name="product_tracking" invisible="1"/>
+                <field name="backflush_on_mo_completion" invisible="1"/>
+                <field name="splits_allowed" invisible="1"/>
+                <div class="row workorder_menu" attrs="{'invisible': [('splits_allowed', '=', False)]}">
+                    <div class="col-6" id="workorder_mo_split_button">
+                        <button name="%(manufacturing_traceability_base.action_split_mrp_wizard)d"
+                                type="action"
+                                context="{'default_workorder_id': id}"
+                                string="Split Manufacturing Order"
+                                attrs="{'invisible': ['|', ('product_tracking', '!=', 'serial'),
+                                ('splits_allowed', '=', False)]}"
+                                class="btn btn btn-primary btn-block"/>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_mrp_routing_workcenter" model="ir.actions.act_window">
+        <field name="name">Operations</field>
+        <field name="res_model">mrp.routing.workcenter</field>
+        <field name="view_mode">form</field>
+        <field name="context">{'need_to_create_wo': True}</field>
+    </record>
+
+    <!-- MRP Workorder server action for cancel workorder-->
+    <record id="ability_to_cancel_workorder" model="ir.actions.server">
+        <field name="name">Cancel</field>
+        <field name="model_id" ref="mrp.model_mrp_workorder"/>
+        <field name="binding_model_id" ref="mrp.model_mrp_workorder" />
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="groups_id" eval="[(4, ref('mrp.group_mrp_manager'))]"/>
+        <field name="code">records.button_cancel_workorder()</field>
+    </record>
+
+    <!-- MRP Workorder server action for delete workorder-->
+    <record id="ability_to_delete_workorder" model="ir.actions.server">
+        <field name="name">Delete</field>
+        <field name="model_id" ref="mrp.model_mrp_workorder"/>
+        <field name="binding_model_id" ref="mrp.model_mrp_workorder" />
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="groups_id" eval="[(4, ref('mrp.group_mrp_manager'))]"/>
+        <field name="code">action = records.button_delete_workorder()</field>
+    </record>
+
+</odoo>

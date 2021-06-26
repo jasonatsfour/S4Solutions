@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mrp_workcenter_mrp_mrp_workcenter_view" model="ir.ui.view">
+        <field name="name">mrp_workcenter_view.inherit_manufacturing_traceability_base</field>
+        <field name="model">mrp.workcenter</field>
+        <field name="inherit_id" ref="mrp.mrp_workcenter_view"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="location_id" options="{'no_create_edit': True, 'no_create': True}"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="mrp_routing_form_view_inherit_manufacturing_traceability_base" model="ir.ui.view">
+        <field name="name">mrp.mrp_routing_form_view.inherit_manufacturing_traceability_base</field>
+        <field name="model">mrp.routing</field>
+        <field name="inherit_id" ref="mrp.mrp_routing_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page//field[@name='operation_ids']" position="attributes">
+                <attribute name="context">{'default_company_id': company_id, 'from_routing': True}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="mrp_routing_workcenter_form_view_inherit_manufacturing_traceability_base" model="ir.ui.view">
+        <field name="name">mrp_routing_workcenter_form_view.inherit_manufacturing_traceability_base</field>
+        <field name="model">mrp.routing.workcenter</field>
+        <field name="inherit_id" ref="mrp.mrp_routing_workcenter_form_view"/>
+        <field name="arch" type="xml">
+            <field name="company_id" position="attributes">
+                <attribute name="readonly">context.get('from_routing', False)</attribute>
+                <attribute name="force_save">1</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>

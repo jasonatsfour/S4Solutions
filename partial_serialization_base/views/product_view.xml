@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_template_only_form_view_inherit_partial_serialization_base" model="ir.ui.view">
+        <field name="name">product.template.product.form.inherit_partial_serialization_base</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <group name="traceability" position="inside">
+                <field name="partial_serialization_id"
+                       class="oe_inline"
+                       options="{'no_create': True, 'no_edit':True}"
+                       attrs="{'invisible': [('tracking', '!=', 'none')]}"/>
+            </group>
+        </field>
+    </record>
+
+    <record id="product_normal_form_view_inherit_partial_serialization_base" model="ir.ui.view">
+        <field name="name">product.product.form.inherit_partial_serialization_base</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <group name="traceability" position="inside">
+                <field name="partial_serialization_id"
+                       class="oe_inline"
+                       options="{'no_create': True, 'no_create_edit':True}"
+                       attrs="{'invisible': [('tracking', '!=', 'none')]}"/>
+            </group>
+        </field>
+    </record>
+
+    <record id="product_template_form_view_procurement_button_inherit_partial_serialization_base" model="ir.ui.view">
+        <field name="name">product.template_procurement_inherit_partial_serialization_base</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="stock.product_template_form_view_procurement_button"/>
+        <field name="arch" type="xml">
+            <button name="action_open_product_lot" position="attributes">
+                <attribute name="attrs">
+                    {'invisible':[('tracking','=', 'none'),('partial_serialization_id', '=', False)]}
+                </attribute>
+            </button>
+        </field>
+    </record>
+
+    <record id="product_form_view_procurement_button_inherit_partial_serialization_base" model="ir.ui.view">
+        <field name="name">product.product.procurement.inherit_partial_serialization_base</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="stock.product_form_view_procurement_button"/>
+        <field name="arch" type="xml">
+            <button name="action_open_product_lot" position="attributes">
+                <attribute name="attrs">
+                    {'invisible':[('tracking','=', 'none'),('partial_serialization_id', '=', False)]}
+                </attribute>
+            </button>
+        </field>
+    </record>
+</odoo>

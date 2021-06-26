@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mrp_production_form_view_inherit_manufacturing_traceability_base" model="ir.ui.view">
+        <field name="name">mrp.production.form.inherit_manufacturing_traceability_base</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='finished_move_line_ids']/tree/field[@name='lot_id']" position="replace">
+                <field name="lot_id"
+                       groups="stock.group_production_lot"
+                       context="{'default_product_id': product_id}"/>
+            </xpath>
+            <div name="button_box" position="inside">
+                <button type="object" name="action_view_splitted_mos" class="oe_stat_button"
+                        icon="fa-chain-broken"  attrs="{'invisible': [('splitted_mo_count', '=', 0)]}">
+                    <field name="splitted_mo_count" widget="statinfo" string="Splitted MO"/>
+                </button>
+                <field name="split_order_source_id" invisible="1"/>
+                 <button type="object" name="action_view_source_mo" class="oe_stat_button"
+                         string="Source MO"
+                        icon="fa-industry"  attrs="{'invisible': [('split_order_source_id', '=', False)]}">
+                </button>
+            </div>
+            <xpath expr="//header" position="inside">
+                <field name="finished_product_tracking" invisible="1"/>
+                <field name="backflush_on_mo_completion" invisible="1"/>
+                <field name="able_to_see_split" invisible="1"/>
+                <button name="%(manufacturing_traceability_base.action_split_mrp_wizard)d"
+                        string="Split"
+                        context="{'default_production_id': id}"
+                        attrs="{'invisible': [('able_to_see_split', '=', False)]}"
+                        type="action"
+                        accesskey="t"
+                        class="oe_highlight"/>
+            </xpath>
+            <xpath expr="//field[@name='move_raw_ids']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'in', ['done', 'cancel'])]}</attribute>
+                <attribute name="context">
+                    {'final_lots': show_final_lots, 'tree_view_ref': 'mrp.view_stock_move_raw_tree',
+                    'form_view_ref': 'mrp.view_stock_move_lots', 'default_location_id': location_src_id,
+                    'default_location_dest_id': production_location_id, 'default_state': 'draft',
+                    'default_raw_material_production_id': id, 'default_picking_type_id': picking_type_id,
+                    'default_externally_added_component': True, 'default_product_uom_qty': product_qty}
+                </attribute>
+            </xpath>
+            <xpath expr="//button[@name='%(mrp.action_mrp_workorder_production_specific)d']" position="attributes">
+                <attribute name="name">action_mrp_workorder_production_specific</attribute>
+                <attribute name="type">object</attribute>
+            </xpath>
+
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="mrp.action_mrp_workorder_production_specific">
+        <field name="domain">[]</field>
+    </record>
+</odoo>

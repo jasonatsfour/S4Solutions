@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_inventory_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.inventory</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='production_lot_info']" position="inside">
+                <div class="col-12 col-lg-6 o_setting_box" id="purchased_product_components_location">
+                    <span>
+                        <b>Default Location for purchased product components.</b>
+                    </span>
+                    <div class="o_setting_right_pane">
+                        <field name="supplier_location_id" widget='selection'/>
+                        <div class="text-muted">
+                            Select default location.
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="res_config_settings_mrp_quality_fail_pop_up_advance_feature" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.advance.fail.popup.feature</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="mrp.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@data-key='mrp']" position="inside">
+                <h2>Quality</h2>
+                <div class="row mt16 o_settings_container">
+                    <div class="col-lg-6 col-12 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="advance_quality_failure"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="advance_quality_failure"/>
+                            <div class="text-muted">
+                                Advance quality Failure for MRP
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

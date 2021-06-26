@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mrp_split_wizard_for_splitting_mo" model="ir.ui.view">
+        <field name="name">mrp.split.wizard.form.view.for.splitting.mo</field>
+        <field name="model">mrp.split.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Split Wizard">
+                <sheet>
+                    <group>
+                        <group invisible="1">
+                            <field name="production_id" />
+                            <field name="workorder_id" />
+                        </group>
+                        <group name="finished_lot_ids">
+                            <field name="finished_lot_ids"
+                                   context="{'from_split_wizard': True,
+                                    'production_id': production_id,
+                                     'workorder_id': workorder_id}"
+                                   widget="many2many_tags"
+                                   options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="button_mo_split" type="object" string="Split" class="btn-primary"/>
+                        <button special="cancel" string="Cancel" class="btn-secondary"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_split_mrp_wizard" model="ir.actions.act_window">
+        <field name="name">Split MO</field>
+        <field name="res_model">mrp.split.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

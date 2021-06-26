@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mrp_workorder_view_form_tablet_inherit_manufacturing_traceability_base" model="ir.ui.view">
+        <field name="name">mrp.workorder.view.form.inherit.quality.tablet.new.inherit_manufacturing_traceability_base</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp_workorder.mrp_workorder_view_form_tablet"/>
+        <field name="arch" type="xml">
+            <field name="product_tracking" position="after">
+                <field name="component_partial_tracking" invisible="1"/>
+                <field name="component_partial_serialization_id" invisible="1"/>
+                <field name="component_id" invisible="1"/>
+                <field name="partial_serialization_id" invisible="1"/>
+                <field name="partial_serialization_type" invisible="1"/>
+            </field>
+            <xpath expr="//div[hasclass('workorder_bar_center')]" position="replace">
+                <div class="workorder_bar_center o_workorder_bar_content">
+                    <div attrs="{'invisible': [('product_tracking', '=', 'none'),('partial_serialization_id','=',False)]}">
+                        <label for="finished_lot_id"
+                               string="Lot Number"
+                               attrs="{'invisible': [('product_tracking', '!=', 'lot'),('partial_serialization_type', '!=', 'lot')]}"/>
+                        <label for="finished_lot_id"
+                               string="Serial Number"
+                               attrs="{'invisible': [('product_tracking', '!=', 'serial'),('partial_serialization_type', '!=', 'serial')]}"/>
+                        <field name="finished_lot_id"
+                               context="{'default_product_id': product_id, 'default_company_id': company_id}"
+                               domain="[('id', 'in', allowed_lots_domain),('stock_production_lot_status_id.key', '=', 'available')]"/>
+                        <button name="action_generate_serial"
+                                type="object"
+                                class="btn btn-secondary fa fa-plus-square-o"
+                                aria-label="Creates a new serial/lot number"
+                                title="Creates a new serial/lot number"
+                                role="img" attrs="{'invisible': [('finished_lot_id', '!=', False)]}"/>
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="//div[hasclass('o_workorder_form')]" position="attributes">
+                <attribute name="attrs">{}</attribute>
+            </xpath>
+            <xpath expr="//div[hasclass('o_workorder_lot')]" position="replace">
+                <div class="o_workorder_lot">
+                    <div class="o_form_label"
+                         attrs="{'invisible': [('component_tracking', '!=', 'serial'),('component_partial_tracking', '!=', 'serial')]}">
+                        Serial Number
+                    </div>
+                    <div class="o_form_label"
+                         attrs="{'invisible': [('component_tracking', '!=', 'lot'),('component_partial_tracking', '!=', 'lot')]}">
+                        Lot Number
+                    </div>
+                    <field name="lot_id"
+                           class="text-center o_lot_number"
+                           context="{'default_product_id': component_id, 'default_company_id': company_id, 'active_mo_id': test_type == 'register_consumed_materials' and production_id or False}"
+                           attrs="{'invisible': [('component_tracking', '=', 'none'), ('component_partial_serialization_id','=',False)]}"
+                           domain="[('is_none_production', '=', False), ('product_id', '=', component_id),('stock_production_lot_status_id.key', 'in', ['available', 'inventory']), '|', ('company_id', '=', False), ('company_id', '=', company_id)]"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

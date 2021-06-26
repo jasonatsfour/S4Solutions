@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+mrp.access_stock_move_mrp_manager,stock.move mrp_manager,stock.model_stock_move,mrp.group_mrp_manager,1,0,0,1

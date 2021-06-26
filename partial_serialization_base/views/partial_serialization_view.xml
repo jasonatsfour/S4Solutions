@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- vehicle flight log  form view -->
+    <record id="vehicle_partial_serialization_form_view" model="ir.ui.view">
+        <field name="name">vehicle.partial.serialization.form</field>
+        <field name="model">vehicle.partial.serialization</field>
+        <field name="arch" type="xml">
+            <form string="Vehicle Partial Serialization">
+                <sheet>
+                    <group>
+                        <group cols="4">
+                            <field name="name" required="1"/>
+                            <field name="description"/>
+                        </group>
+                        <group cols="4">
+                            <field name="manufacturing_use"/>
+                            <field name="fleet_use"/>
+                            <field name="traceability_type" required="True"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id='action_vehicle_partial_serialization' model='ir.actions.act_window'>
+        <field name="name">Partial Serialization</field>
+        <field name="res_model">vehicle.partial.serialization</field>
+        <field name="view_mode">tree,kanban,form,graph</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a new Partial Serialization.
+            </p>
+        </field>
+    </record>
+
+    <!-- Partial Serialization Configuration -->
+    <menuitem id="menu_partial_serialization_configuration"
+              name="Partial Serialization"
+              parent="stock.menu_warehouse_config"
+              sequence="120"
+              action="action_vehicle_partial_serialization"/>
+</odoo>

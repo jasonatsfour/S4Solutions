@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="manufacturing_traceability_base_form_inherit_for_quality_check_view_form_failure" model="ir.ui.view">
+			<field name="name">quality_check_view_form_failure.manufacturing_traceability_base.form</field>
+			<field name="model">quality.check</field>
+			<field name="inherit_id" ref="quality_control.quality_check_view_form_failure"/>
+			<field name="arch" type="xml">
+				<field name="failure_message" position="attributes">
+					<attribute name="readonly">1</attribute>
+				</field>
+			</field>
+		</record>
+
+		<record id="step_view_form_view_form_inherit_manufacturing_traceability_base" model="ir.ui.view">
+			<field name="name">step_view_form.form.inherit.manufacturing.traceability</field>
+			<field name="model">quality.point</field>
+			<field name="inherit_id" ref="mrp_workorder.step_view_form"/>
+			<field name="arch" type="xml">
+				<field name="picking_type_id" position="attributes">
+					<attribute name="readonly">context.get('from_workorder', False)</attribute>
+				</field>
+			</field>
+		</record>
+
+	</data>
+</odoo>
