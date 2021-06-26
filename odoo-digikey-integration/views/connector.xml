@@ -1,0 +1,74 @@
+<odoo>
+    <data>
+    <record model="ir.ui.view" id="digikey_config_form_view">
+        <field name="name">digikey.connector.form</field>
+        <field name="model">digikey.connector</field>
+        <field name="arch" type="xml">
+            <form string="Digikey Config Form" >
+                <sheet>
+                    <group string="Digikey Configuration Form">
+                        <field name="name" invisible="1"/>
+                        <field name="redirect_uri" string="Digikey OAuth Redirection URL"/>
+                        <field name="client_id" string="Client Id"/>
+                        <field name="client_secret" string="Client Secret"/>
+                        <field name="token_url" string="Token url" />
+                        <field name="o2_go_to" string="Go to link" widget="url" />
+                        <field name="access_token" string="Access Token" attrs="{'invisible':[('access_token','=','token')]}"/>
+
+                        <field name="refresh_token" string="Refresh Token" attrs="{'invisible':[('refresh_token','=','refresh_token')]}"/>
+                        <field name="expires_in" string="Expires in Seconds" attrs="{'invisible':[('access_token','=','token')]}"/>
+
+                    </group>
+                    <group>
+                      <button name="digi_authorization_o2_step1" type="object" string="Get Url" class="oe_highlight" readonly="True" attrs="{'invisible':[('access_token','!=','token')]}"/> 
+                     
+                      <button name="test_connection" type="object" string="Test Connection" class="oe_highlight" attrs="{'invisible':[('access_token','=','token')]}"/>
+
+                    </group>
+                   
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="digikey_config_tree_view">
+        <field name="name">digikey.connector.tree</field>
+        <field name="model">digikey.connector</field>
+        <field name="arch" type="xml">
+            <tree string="digikey Config">
+               <field name="redirect_uri" string="Enter digikey URL"/>
+                        <field name="client_id" string="Client id"/>
+                        <field name="client_secret" string="Client Secret"/>
+            </tree> 
+        </field>
+    </record>
+    <record model="ir.ui.view" id="digikey_config_search_view">
+        <field name="name">digikey.connector.search</field>
+        <field name="model">digikey.connector</field>
+        <field name="arch" type="xml">
+            <search string="digikey Config">
+    <field name="redirect_uri" string="Enter digikey URL"/>
+                        <field name="client_id" string="Client id"/>
+                        <field name="client_secret" string="Client Secret"/>
+            </search>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="digikey_config_action">
+        <field name="name">Digikey Config</field>
+        <field name="res_model">digikey.connector</field>
+        <!--<field name="view_type">form</field-->
+        <field name="view_mode">search,tree,form</field>
+        <field name="search_view_id" ref="digikey_config_search_view"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Create the connection
+            </p>
+        </field>
+    </record>
+      <!-- menu categories -->
+      <menuitem name="Digikey Configuration" id="odoo-digikey-integration.menu_1" parent="base.menu_administration"/>
+      <menuitem name="Configuration" id="odoo-digikey-integration_connection" parent="odoo-digikey-integration.menu_1" action="digikey_config_action"/>
+
+     
+  </data>
+</odoo>

@@ -1,0 +1,9 @@
+cups
+fedex==2.4.0
+requests_oauthlib==0.8.0
+pystrich
+boto3==1.11.4
+pyPdf
+fpdf
+pillow
+img2pdf
