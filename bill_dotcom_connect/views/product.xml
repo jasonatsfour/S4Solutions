@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    	<record model="ir.ui.view" id="billdotcom_product_view">
+            <field name="name">product.product.billdotcom.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="stock.product_form_view_procurement_button"/>
+            <field name="priority" eval="20"/>
+            <field name="arch" type="xml">
+            	<xpath expr="//button[@name='action_update_quantity_on_hand']" position="before">
+                    <button name="sync_product" string="Sync" type="object" class="oe_highlight"/>
+                </xpath>
+			</field>
+		</record>
+        <record model="ir.ui.view" id="billdotcom_product_template_view">
+            <field name="name">product.template.billdotcom.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="stock.product_template_form_view_procurement_button"/>
+            <field name="priority" eval="20"/>
+            <field name="arch" type="xml">
+            	<xpath expr="//button[@name='action_update_quantity_on_hand']" position="before">
+                    <button name="sync_product" string="Sync" type="object" class="oe_highlight"/>
+                </xpath>
+			</field>
+		</record>
+    </data>
+</odoo>

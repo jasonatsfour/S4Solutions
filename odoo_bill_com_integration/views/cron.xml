@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<odoo noupdate="1">
+
+    <!-- cron for importing bill from bill.com -->
+    <record id="cron_import_all_so" model="ir.cron">
+        <field name="name">Cron for Importing Bill</field>
+        <field name="model_id" ref="model_billdotcom_configure"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_import_bill()</field>
+        <field name="interval_number">10</field>
+        <!-- <field name="interval_type">days</field> -->
+        <field name="interval_type">minutes</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="active">Active</field>
+    </record>
+</odoo>
